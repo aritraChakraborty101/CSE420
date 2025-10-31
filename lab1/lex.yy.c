@@ -524,8 +524,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "lex_analyzer.l"
-#line 4 "lex_analyzer.l"
+#line 1 "22101892.l"
+#line 4 "22101892.l"
 #include<bits/stdc++.h>
 
 #include"symbol_info.h"
@@ -766,7 +766,7 @@ YY_DECL
 		}
 
 	{
-#line 40 "lex_analyzer.l"
+#line 40 "22101892.l"
 
 
 #line 773 "lex.yy.c"
@@ -828,18 +828,18 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 42 "lex_analyzer.l"
+#line 42 "22101892.l"
 { /* ignore whitespace */ }
 	YY_BREAK
 case 2:
 /* rule 2 can match eol */
 YY_RULE_SETUP
-#line 43 "lex_analyzer.l"
+#line 43 "22101892.l"
 { lines++; /* do necessary bookkeeping (line number tracking etc.) */ }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 45 "lex_analyzer.l"
+#line 45 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <IF> Lexeme "+yytext+" found"+"\n"+"\n";
 			    outlog<<loglist;
@@ -847,7 +847,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 50 "lex_analyzer.l"
+#line 50 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <ELSE> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist;               
@@ -855,7 +855,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 55 "lex_analyzer.l"
+#line 55 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <FOR> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist; 
@@ -863,7 +863,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 60 "lex_analyzer.l"
+#line 60 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <WHILE> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist;
@@ -871,7 +871,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 65 "lex_analyzer.l"
+#line 65 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <DO> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist; 
@@ -879,7 +879,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 70 "lex_analyzer.l"
+#line 70 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <BREAK> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist; 
@@ -887,7 +887,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 75 "lex_analyzer.l"
+#line 75 "22101892.l"
 {
                 symbol_info *s = new symbol_info((string)yytext,"INT");
                 yylval = (YYSTYPE)s;
@@ -898,7 +898,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 83 "lex_analyzer.l"
+#line 83 "22101892.l"
 {
                 symbol_info *s = new symbol_info((string)yytext,"CHAR");
                 yylval = (YYSTYPE)s;
@@ -909,7 +909,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 91 "lex_analyzer.l"
+#line 91 "22101892.l"
 {
                 symbol_info *s = new symbol_info((string)yytext,"FLOAT");
                 yylval = (YYSTYPE)s;
@@ -920,7 +920,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 99 "lex_analyzer.l"
+#line 99 "22101892.l"
 {
                 symbol_info *s = new symbol_info((string)yytext,"DOUBLE");
                 yylval = (YYSTYPE)s;
@@ -931,7 +931,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 107 "lex_analyzer.l"
+#line 107 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <VOID> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist;
@@ -939,7 +939,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 14:
 YY_RULE_SETUP
-#line 112 "lex_analyzer.l"
+#line 112 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <RETURN> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist; 
@@ -947,7 +947,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 117 "lex_analyzer.l"
+#line 117 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <SWITCH> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist; 
@@ -955,7 +955,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 122 "lex_analyzer.l"
+#line 122 "22101892.l"
 {
                 loglist="Line no "+to_string(lines)+": Token <CASE> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist; 
@@ -963,7 +963,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 127 "lex_analyzer.l"
+#line 127 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <DEFAULT> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist; 
@@ -971,7 +971,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 18:
 YY_RULE_SETUP
-#line 132 "lex_analyzer.l"
+#line 132 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <CONTINUE> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist; 
@@ -979,7 +979,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 19:
 YY_RULE_SETUP
-#line 137 "lex_analyzer.l"
+#line 137 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <GOTO> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist; 
@@ -987,7 +987,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 20:
 YY_RULE_SETUP
-#line 142 "lex_analyzer.l"
+#line 142 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <PRINTLN> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist; 
@@ -995,7 +995,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 21:
 YY_RULE_SETUP
-#line 147 "lex_analyzer.l"
+#line 147 "22101892.l"
 {
                 symbol_info *s = new symbol_info((string)yytext,"ADDOP");
                 yylval = (YYSTYPE)s;
@@ -1006,7 +1006,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 156 "lex_analyzer.l"
+#line 156 "22101892.l"
 {
                 loglist="Line no "+to_string(lines)+": Token <INCOP> Lexeme "+yytext+" found"+"\n"+"\n";
 			    outlog<<loglist;
@@ -1015,7 +1015,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 161 "lex_analyzer.l"
+#line 161 "22101892.l"
 {
                 loglist="Line no "+to_string(lines)+": Token <DECOP> Lexeme "+yytext+" found"+"\n"+"\n";
 			    //outlog<<loglist;
@@ -1023,7 +1023,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 165 "lex_analyzer.l"
+#line 165 "22101892.l"
 {
                 symbol_info *s = new symbol_info((string)yytext,"RELOP");
                 yylval = (YYSTYPE)s;
@@ -1033,7 +1033,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 171 "lex_analyzer.l"
+#line 171 "22101892.l"
 {
                 loglist="Line no "+to_string(lines)+": Token <ASSIGNOP> Lexeme "+yytext+" found"+"\n"+"\n";
 			    outlog<<loglist;
@@ -1041,7 +1041,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 175 "lex_analyzer.l"
+#line 175 "22101892.l"
 {
                 symbol_info *s = new symbol_info((string)yytext,"MULOP");
                 yylval = (YYSTYPE)s;
@@ -1051,7 +1051,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 184 "lex_analyzer.l"
+#line 184 "22101892.l"
 { 
                 loglist="Line no "+to_string(lines)+": Token <COMMA> Lexeme "+yytext+" found"+"\n"+"\n";
 			    outlog<<loglist;               
@@ -1059,7 +1059,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 188 "lex_analyzer.l"
+#line 188 "22101892.l"
 {
                 loglist="Line no "+to_string(lines)+": Token <SEMICOLON> Lexeme "+yytext+" found"+"\n"+"\n";
 			    outlog<<loglist;
@@ -1068,7 +1068,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 193 "lex_analyzer.l"
+#line 193 "22101892.l"
 {
                 loglist="Line no "+to_string(lines)+": Token <LPAREN> Lexeme "+yytext+" found"+"\n"+"\n";
 			    outlog<<loglist;               
@@ -1077,7 +1077,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 198 "lex_analyzer.l"
+#line 198 "22101892.l"
 {
                 loglist="Line no "+to_string(lines)+": Token <RPAREN> Lexeme "+yytext+" found"+"\n"+"\n";
 			    outlog<<loglist;               
@@ -1086,7 +1086,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 203 "lex_analyzer.l"
+#line 203 "22101892.l"
 {
                 loglist="Line no "+to_string(lines)+": Token <LCURL> Lexeme "+yytext+" found"+"\n"+"\n";
 			    outlog<<loglist;               
@@ -1095,7 +1095,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 208 "lex_analyzer.l"
+#line 208 "22101892.l"
 {
                 loglist="Line no "+to_string(lines)+": Token <RCURL> Lexeme "+yytext+" found"+"\n"+"\n";
 			    outlog<<loglist;               
@@ -1104,7 +1104,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 213 "lex_analyzer.l"
+#line 213 "22101892.l"
 {
                 loglist="Line no "+to_string(lines)+": Token <LTHIRD> Lexeme "+yytext+" found"+"\n"+"\n";
 			    outlog<<loglist;               
@@ -1113,7 +1113,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 218 "lex_analyzer.l"
+#line 218 "22101892.l"
 {
                 loglist="Line no "+to_string(lines)+": Token <RTHIRD> Lexeme "+yytext+" found"+"\n"+"\n";
 			    outlog<<loglist;               
@@ -1122,7 +1122,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 223 "lex_analyzer.l"
+#line 223 "22101892.l"
 {
                 symbol_info *s = new symbol_info((string)yytext,"ID");
                 yylval = (YYSTYPE)s;
@@ -1133,7 +1133,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 230 "lex_analyzer.l"
+#line 230 "22101892.l"
 {
                 symbol_info *s = new symbol_info((string)yytext,"CONST_INT");
                 yylval = (YYSTYPE)s;
@@ -1144,7 +1144,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 237 "lex_analyzer.l"
+#line 237 "22101892.l"
 {
                 symbol_info *s = new symbol_info((string)yytext,"CONST_FLOAT");
                 yylval = (YYSTYPE)s;
@@ -1155,7 +1155,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 38:
 YY_RULE_SETUP
-#line 244 "lex_analyzer.l"
+#line 244 "22101892.l"
 {
                 symbol_info *s = new symbol_info((string)yytext,"LOGICOP");
                 yylval = (YYSTYPE)s;
@@ -1166,7 +1166,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 39:
 YY_RULE_SETUP
-#line 252 "lex_analyzer.l"
+#line 252 "22101892.l"
 {
                 loglist="Line no "+to_string(lines)+": Token <NOT> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist;
@@ -1175,7 +1175,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 40:
 YY_RULE_SETUP
-#line 257 "lex_analyzer.l"
+#line 257 "22101892.l"
 ECHO;
 	YY_BREAK
 #line 1182 "lex.yy.c"
@@ -2183,4 +2183,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 257 "lex_analyzer.l"
+#line 257 "22101892.l"

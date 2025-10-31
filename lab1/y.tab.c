@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "syntax_analyzer.y"
+#line 1 "22101892.y"
 
 #include<bits/stdc++.h>
 #include"symbol_info.h"
@@ -1335,7 +1335,7 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* start: program  */
-#line 29 "syntax_analyzer.y"
+#line 29 "22101892.y"
         {
 		outlog<<"At line no: "<<lines<<" start : program "<<endl<<endl;
 		outlog<<"\nTotal lines: "<<lines<<endl;
@@ -1345,7 +1345,7 @@ yyreduce:
     break;
 
   case 3: /* program: program unit  */
-#line 37 "syntax_analyzer.y"
+#line 37 "22101892.y"
         {
             outlog<<"At line no: "<<lines<<" program : program unit "<<endl<<endl;
             outlog<<yyvsp[-1]->getname()+"\n"+yyvsp[0]->getname()<<endl<<endl;
@@ -1355,7 +1355,7 @@ yyreduce:
     break;
 
   case 4: /* program: unit  */
-#line 43 "syntax_analyzer.y"
+#line 43 "22101892.y"
         {
 			outlog<<"At line no: "<<lines<<" program : unit "<<endl<<endl;
             outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1365,7 +1365,7 @@ yyreduce:
     break;
 
   case 5: /* unit: var_declaration  */
-#line 50 "syntax_analyzer.y"
+#line 50 "22101892.y"
      {
        outlog<<"At line no: "<<lines<<" unit : var_declaration "<<endl<<endl;
        outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1375,7 +1375,7 @@ yyreduce:
     break;
 
   case 6: /* unit: func_definition  */
-#line 56 "syntax_analyzer.y"
+#line 56 "22101892.y"
      {
        outlog<<"At line no: "<<lines<<" unit : func_definition "<<endl<<endl;
        outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1385,7 +1385,7 @@ yyreduce:
     break;
 
   case 7: /* var_declaration: type_specifier declaration_list SEMICOLON  */
-#line 64 "syntax_analyzer.y"
+#line 64 "22101892.y"
                 {
                     outlog<<"At line no: "<<lines<<" var_declaration : type_specifier declaration_list SEMICOLON "<<endl<<endl;
                     outlog<<yyvsp[-2]->getname()<<" "<<yyvsp[-1]->getname()<<";"<<endl<<endl;
@@ -1395,7 +1395,7 @@ yyreduce:
     break;
 
   case 8: /* type_specifier: INT  */
-#line 72 "syntax_analyzer.y"
+#line 72 "22101892.y"
                {
                  outlog<<"At line no: "<<lines<<" type_specifier : INT "<<endl<<endl;
                  outlog<<"int"<<endl<<endl;
@@ -1405,7 +1405,7 @@ yyreduce:
     break;
 
   case 9: /* type_specifier: FLOAT  */
-#line 78 "syntax_analyzer.y"
+#line 78 "22101892.y"
                {
                  outlog<<"At line no: "<<lines<<" type_specifier : FLOAT "<<endl<<endl;
                  outlog<<"float"<<endl<<endl;
@@ -1415,7 +1415,7 @@ yyreduce:
     break;
 
   case 10: /* type_specifier: VOID  */
-#line 84 "syntax_analyzer.y"
+#line 84 "22101892.y"
                {
                  outlog<<"At line no: "<<lines<<" type_specifier : VOID "<<endl<<endl;
                  outlog<<"void"<<endl<<endl;
@@ -1425,7 +1425,7 @@ yyreduce:
     break;
 
   case 11: /* declaration_list: declaration_list COMMA ID  */
-#line 92 "syntax_analyzer.y"
+#line 92 "22101892.y"
                  {
                      outlog<<"At line no: "<<lines<<" declaration_list : declaration_list COMMA ID "<<endl<<endl;
                      outlog<<yyvsp[-2]->getname()<<","<<yyvsp[0]->getname()<<endl<<endl;
@@ -1435,7 +1435,7 @@ yyreduce:
     break;
 
   case 12: /* declaration_list: declaration_list COMMA ID LTHIRD CONST_INT RTHIRD  */
-#line 98 "syntax_analyzer.y"
+#line 98 "22101892.y"
                  {
                      outlog<<"At line no: "<<lines<<" declaration_list : declaration_list COMMA ID LTHIRD CONST_INT RTHIRD "<<endl<<endl;
                      outlog<<yyvsp[-5]->getname()<<","<<yyvsp[-3]->getname()<<"["<<yyvsp[-1]->getname()<<"]"<<endl<<endl;
@@ -1445,7 +1445,7 @@ yyreduce:
     break;
 
   case 13: /* declaration_list: ID  */
-#line 104 "syntax_analyzer.y"
+#line 104 "22101892.y"
                  {
                      outlog<<"At line no: "<<lines<<" declaration_list : ID "<<endl<<endl;
                      outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1455,7 +1455,7 @@ yyreduce:
     break;
 
   case 14: /* declaration_list: ID LTHIRD CONST_INT RTHIRD  */
-#line 110 "syntax_analyzer.y"
+#line 110 "22101892.y"
                  {
                      outlog<<"At line no: "<<lines<<" declaration_list : ID LTHIRD CONST_INT RTHIRD "<<endl<<endl;
                      outlog<<yyvsp[-3]->getname()<<"["<<yyvsp[-1]->getname()<<"]"<<endl<<endl;
@@ -1465,7 +1465,7 @@ yyreduce:
     break;
 
   case 15: /* parameter_list: parameter_list COMMA type_specifier ID  */
-#line 117 "syntax_analyzer.y"
+#line 117 "22101892.y"
                 {
                     outlog<<"At line no: "<<lines<<" parameter_list : parameter_list COMMA type_specifier ID "<<endl<<endl;
                     outlog<<yyvsp[-3]->getname()<<","<<yyvsp[-1]->getname()<<" "<<yyvsp[0]->getname()<<endl<<endl;
@@ -1475,7 +1475,7 @@ yyreduce:
     break;
 
   case 16: /* parameter_list: parameter_list COMMA type_specifier  */
-#line 123 "syntax_analyzer.y"
+#line 123 "22101892.y"
                 {
                     outlog<<"At line no: "<<lines<<" parameter_list : parameter_list COMMA type_specifier "<<endl<<endl;
                     outlog<<yyvsp[-2]->getname()<<","<<yyvsp[0]->getname()<<endl<<endl;
@@ -1485,7 +1485,7 @@ yyreduce:
     break;
 
   case 17: /* parameter_list: type_specifier ID  */
-#line 129 "syntax_analyzer.y"
+#line 129 "22101892.y"
                 {
                     outlog<<"At line no: "<<lines<<" parameter_list : type_specifier ID "<<endl<<endl;
                     outlog<<yyvsp[-1]->getname()<<" "<<yyvsp[0]->getname()<<endl<<endl;
@@ -1495,7 +1495,7 @@ yyreduce:
     break;
 
   case 18: /* parameter_list: type_specifier  */
-#line 135 "syntax_analyzer.y"
+#line 135 "22101892.y"
                 {
                     outlog<<"At line no: "<<lines<<" parameter_list : type_specifier "<<endl<<endl;
                     outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1505,7 +1505,7 @@ yyreduce:
     break;
 
   case 19: /* compound_statement: LCURL statements RCURL  */
-#line 143 "syntax_analyzer.y"
+#line 143 "22101892.y"
                     {
                       outlog<<"At line no: "<<lines<<" compound_statement : LCURL statements RCURL "<<endl<<endl;
                       outlog<<"{\n"<<yyvsp[-1]->getname()<<"\n}"<<endl<<endl;
@@ -1515,7 +1515,7 @@ yyreduce:
     break;
 
   case 20: /* compound_statement: LCURL RCURL  */
-#line 149 "syntax_analyzer.y"
+#line 149 "22101892.y"
                     {
                         outlog<<"At line no: "<<lines<<" compound_statement : LCURL RCURL "<<endl<<endl;
                         outlog<<"{\n}"<<endl<<endl;
@@ -1525,7 +1525,7 @@ yyreduce:
     break;
 
   case 21: /* statements: statements statement  */
-#line 157 "syntax_analyzer.y"
+#line 157 "22101892.y"
             {
                 outlog<<"At line no: "<<lines<<" statements : statements statement "<<endl<<endl;
                 outlog<<yyvsp[-1]->getname()<<"\n"<<yyvsp[0]->getname()<<endl<<endl;
@@ -1535,7 +1535,7 @@ yyreduce:
     break;
 
   case 22: /* statements: statement  */
-#line 163 "syntax_analyzer.y"
+#line 163 "22101892.y"
             {
               outlog<<"At line no: "<<lines<<" statements : statement "<<endl<<endl;
               outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1545,7 +1545,7 @@ yyreduce:
     break;
 
   case 23: /* expression: logic_expression  */
-#line 171 "syntax_analyzer.y"
+#line 171 "22101892.y"
             {
               outlog<<"At line no: "<<lines<<" expression : logic_expression "<<endl<<endl;
               outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1555,7 +1555,7 @@ yyreduce:
     break;
 
   case 24: /* expression: variable ASSIGNOP logic_expression  */
-#line 177 "syntax_analyzer.y"
+#line 177 "22101892.y"
             {
               outlog<<"At line no: "<<lines<<" expression : variable ASSIGNOP logic_expression "<<endl<<endl;
               outlog<<yyvsp[-2]->getname()<<"="<<yyvsp[0]->getname()<<endl<<endl;
@@ -1565,7 +1565,7 @@ yyreduce:
     break;
 
   case 25: /* variable: ID LTHIRD expression RTHIRD  */
-#line 185 "syntax_analyzer.y"
+#line 185 "22101892.y"
           {
               outlog<<"At line no: "<<lines<<" variable : ID LTHIRD expression RTHIRD "<<endl<<endl;
               outlog<<yyvsp[-3]->getname()<<"["<<yyvsp[-1]->getname()<<"]"<<endl<<endl;
@@ -1575,7 +1575,7 @@ yyreduce:
     break;
 
   case 26: /* variable: ID  */
-#line 191 "syntax_analyzer.y"
+#line 191 "22101892.y"
           {
             outlog<<"At line no: "<<lines<<" variable : ID "<<endl<<endl;
             outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1585,7 +1585,7 @@ yyreduce:
     break;
 
   case 27: /* logic_expression: rel_expression  */
-#line 199 "syntax_analyzer.y"
+#line 199 "22101892.y"
                   {
                     outlog<<"At line no: "<<lines<<" logic_expression : rel_expression "<<endl<<endl;
                     outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1595,7 +1595,7 @@ yyreduce:
     break;
 
   case 28: /* logic_expression: rel_expression LOGICOP rel_expression  */
-#line 205 "syntax_analyzer.y"
+#line 205 "22101892.y"
                   {
                       outlog<<"At line no: "<<lines<<" logic_expression : rel_expression LOGICOP rel_expression "<<endl<<endl;
                       outlog<<yyvsp[-2]->getname()<<""<<yyvsp[-1]->getname()<<""<<yyvsp[0]->getname()<<endl<<endl;
@@ -1605,7 +1605,7 @@ yyreduce:
     break;
 
   case 29: /* rel_expression: simple_expression  */
-#line 213 "syntax_analyzer.y"
+#line 213 "22101892.y"
                 {
                   outlog<<"At line no: "<<lines<<" rel_expression : simple_expression "<<endl<<endl;
                   outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1615,7 +1615,7 @@ yyreduce:
     break;
 
   case 30: /* rel_expression: simple_expression RELOP simple_expression  */
-#line 219 "syntax_analyzer.y"
+#line 219 "22101892.y"
                 {
                     outlog<<"At line no: "<<lines<<" rel_expression : simple_expression RELOP simple_expression "<<endl<<endl;
                     outlog<<yyvsp[-2]->getname()<<""<<yyvsp[-1]->getname()<<""<<yyvsp[0]->getname()<<endl<<endl;
@@ -1625,7 +1625,7 @@ yyreduce:
     break;
 
   case 31: /* simple_expression: term  */
-#line 227 "syntax_analyzer.y"
+#line 227 "22101892.y"
                   {
                     outlog<<"At line no: "<<lines<<" simple_expression : term "<<endl<<endl;
                     outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1635,7 +1635,7 @@ yyreduce:
     break;
 
   case 32: /* simple_expression: simple_expression ADDOP term  */
-#line 233 "syntax_analyzer.y"
+#line 233 "22101892.y"
                   {
                       outlog<<"At line no: "<<lines<<" simple_expression : simple_expression ADDOP term "<<endl<<endl;
                       outlog<<yyvsp[-2]->getname()<<""<<yyvsp[-1]->getname()<<""<<yyvsp[0]->getname()<<endl<<endl;
@@ -1645,7 +1645,7 @@ yyreduce:
     break;
 
   case 33: /* term: unary_expression  */
-#line 241 "syntax_analyzer.y"
+#line 241 "22101892.y"
       {
         outlog<<"At line no: "<<lines<<" term : unary_expression "<<endl<<endl;
         outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1655,7 +1655,7 @@ yyreduce:
     break;
 
   case 34: /* term: term MULOP unary_expression  */
-#line 247 "syntax_analyzer.y"
+#line 247 "22101892.y"
       {
           outlog<<"At line no: "<<lines<<" term : term MULOP unary_expression "<<endl<<endl;
           outlog<<yyvsp[-2]->getname()<<""<<yyvsp[-1]->getname()<<""<<yyvsp[0]->getname()<<endl<<endl;
@@ -1665,7 +1665,7 @@ yyreduce:
     break;
 
   case 35: /* unary_expression: ADDOP unary_expression  */
-#line 255 "syntax_analyzer.y"
+#line 255 "22101892.y"
                   {
                       outlog<<"At line no: "<<lines<<" unary_expression : ADDOP unary_expression "<<endl<<endl;
                       outlog<<yyvsp[-1]->getname()<<yyvsp[0]->getname()<<endl<<endl;
@@ -1675,7 +1675,7 @@ yyreduce:
     break;
 
   case 36: /* unary_expression: NOT unary_expression  */
-#line 261 "syntax_analyzer.y"
+#line 261 "22101892.y"
                   {
                       outlog<<"At line no: "<<lines<<" unary_expression : NOT unary_expression "<<endl<<endl;
                       outlog<<"!"<<yyvsp[0]->getname()<<endl<<endl;
@@ -1685,7 +1685,7 @@ yyreduce:
     break;
 
   case 37: /* unary_expression: factor  */
-#line 267 "syntax_analyzer.y"
+#line 267 "22101892.y"
                   {
                     outlog<<"At line no: "<<lines<<" unary_expression : factor "<<endl<<endl;
                     outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1695,7 +1695,7 @@ yyreduce:
     break;
 
   case 38: /* factor: variable  */
-#line 275 "syntax_analyzer.y"
+#line 275 "22101892.y"
         {
             outlog<<"At line no: "<<lines<<" factor : variable "<<endl<<endl;
             outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1705,7 +1705,7 @@ yyreduce:
     break;
 
   case 39: /* factor: ID LPAREN argument_list RPAREN  */
-#line 281 "syntax_analyzer.y"
+#line 281 "22101892.y"
         {
             outlog<<"At line no: "<<lines<<" factor : ID LPAREN argument_list RPAREN "<<endl<<endl;
             outlog<<yyvsp[-3]->getname()<<"("<<yyvsp[-1]->getname()<<")"<<endl<<endl;
@@ -1715,7 +1715,7 @@ yyreduce:
     break;
 
   case 40: /* factor: LPAREN expression RPAREN  */
-#line 287 "syntax_analyzer.y"
+#line 287 "22101892.y"
         {
             outlog<<"At line no: "<<lines<<" factor : LPAREN expression RPAREN "<<endl<<endl;
             outlog<<"("<<yyvsp[-1]->getname()<<")"<<endl<<endl;
@@ -1725,7 +1725,7 @@ yyreduce:
     break;
 
   case 41: /* factor: CONST_INT  */
-#line 293 "syntax_analyzer.y"
+#line 293 "22101892.y"
         {
           outlog<<"At line no: "<<lines<<" factor : CONST_INT "<<endl<<endl;
           outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1735,7 +1735,7 @@ yyreduce:
     break;
 
   case 42: /* factor: CONST_FLOAT  */
-#line 299 "syntax_analyzer.y"
+#line 299 "22101892.y"
         {
             outlog<<"At line no: "<<lines<<" factor : CONST_FLOAT "<<endl<<endl;
             outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1745,7 +1745,7 @@ yyreduce:
     break;
 
   case 43: /* factor: variable INCOP  */
-#line 305 "syntax_analyzer.y"
+#line 305 "22101892.y"
         {
             outlog<<"At line no: "<<lines<<" factor : variable INCOP "<<endl<<endl;
             outlog<<yyvsp[-1]->getname()<<"++"<<endl<<endl;
@@ -1755,7 +1755,7 @@ yyreduce:
     break;
 
   case 44: /* factor: variable DECOP  */
-#line 311 "syntax_analyzer.y"
+#line 311 "22101892.y"
         {
             outlog<<"At line no: "<<lines<<" factor : variable DECOP "<<endl<<endl;
             outlog<<yyvsp[-1]->getname()<<"--"<<endl<<endl;
@@ -1765,7 +1765,7 @@ yyreduce:
     break;
 
   case 45: /* expression_statement: SEMICOLON  */
-#line 319 "syntax_analyzer.y"
+#line 319 "22101892.y"
                      {
                          outlog<<"At line no: "<<lines<<" expression_statement : SEMICOLON "<<endl<<endl;
                          outlog<<";"<<endl<<endl;
@@ -1775,7 +1775,7 @@ yyreduce:
     break;
 
   case 46: /* expression_statement: expression SEMICOLON  */
-#line 325 "syntax_analyzer.y"
+#line 325 "22101892.y"
                      {
                          outlog<<"At line no: "<<lines<<" expression_statement : expression SEMICOLON "<<endl<<endl;
                          outlog<<yyvsp[-1]->getname()<<";"<<endl<<endl;
@@ -1785,7 +1785,7 @@ yyreduce:
     break;
 
   case 47: /* argument_list: arguments  */
-#line 333 "syntax_analyzer.y"
+#line 333 "22101892.y"
               {
                   outlog<<"At line no: "<<lines<<" argument_list : arguments "<<endl<<endl;
                   outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1795,7 +1795,7 @@ yyreduce:
     break;
 
   case 48: /* argument_list: %empty  */
-#line 339 "syntax_analyzer.y"
+#line 339 "22101892.y"
               {
                   outlog<<"At line no: "<<lines<<" argument_list : /* empty */ "<<endl<<endl;
                   outlog<<""<<endl<<endl;
@@ -1805,7 +1805,7 @@ yyreduce:
     break;
 
   case 49: /* arguments: arguments COMMA logic_expression  */
-#line 347 "syntax_analyzer.y"
+#line 347 "22101892.y"
           {
               outlog<<"At line no: "<<lines<<" arguments : arguments COMMA logic_expression "<<endl<<endl;
               outlog<<yyvsp[-2]->getname()<<","<<yyvsp[0]->getname()<<endl<<endl;
@@ -1815,7 +1815,7 @@ yyreduce:
     break;
 
   case 50: /* arguments: logic_expression  */
-#line 353 "syntax_analyzer.y"
+#line 353 "22101892.y"
           {
               outlog<<"At line no: "<<lines<<" arguments : logic_expression "<<endl<<endl;
               outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1825,7 +1825,7 @@ yyreduce:
     break;
 
   case 51: /* func_definition: type_specifier ID LPAREN parameter_list RPAREN compound_statement  */
-#line 360 "syntax_analyzer.y"
+#line 360 "22101892.y"
                 {	
 			outlog<<"At line no: "<<lines<<" func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement "<<endl<<endl;
 			outlog<<yyvsp[-5]->getname()<<" "<<yyvsp[-4]->getname()<<"("<<yyvsp[-2]->getname()<<")\n"<<yyvsp[0]->getname()<<endl<<endl;
@@ -1836,7 +1836,7 @@ yyreduce:
     break;
 
   case 52: /* func_definition: type_specifier ID LPAREN RPAREN compound_statement  */
-#line 367 "syntax_analyzer.y"
+#line 367 "22101892.y"
                 {
 			
 			outlog<<"At line no: "<<lines<<" func_definition : type_specifier ID LPAREN RPAREN compound_statement "<<endl<<endl;
@@ -1848,7 +1848,7 @@ yyreduce:
     break;
 
   case 53: /* statement: var_declaration  */
-#line 377 "syntax_analyzer.y"
+#line 377 "22101892.y"
     {
         outlog<<"At line no: "<<lines<<" statement : var_declaration "<<endl<<endl;
         outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1858,7 +1858,7 @@ yyreduce:
     break;
 
   case 54: /* statement: expression_statement  */
-#line 383 "syntax_analyzer.y"
+#line 383 "22101892.y"
     {
         outlog<<"At line no: "<<lines<<" statement : expression_statement "<<endl<<endl;
         outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1868,7 +1868,7 @@ yyreduce:
     break;
 
   case 55: /* statement: compound_statement  */
-#line 389 "syntax_analyzer.y"
+#line 389 "22101892.y"
     {
         outlog<<"At line no: "<<lines<<" statement : compound_statement "<<endl<<endl;
         outlog<<yyvsp[0]->getname()<<endl<<endl;
@@ -1878,7 +1878,7 @@ yyreduce:
     break;
 
   case 56: /* statement: FOR LPAREN expression_statement expression_statement expression RPAREN statement  */
-#line 395 "syntax_analyzer.y"
+#line 395 "22101892.y"
     {
         outlog<<"At line no: "<<lines<<" statement : FOR LPAREN expression_statement expression_statement expression RPAREN statement"<<endl<<endl;
         string stmt = yyvsp[0]->getname();
@@ -1894,7 +1894,7 @@ yyreduce:
     break;
 
   case 57: /* statement: IF LPAREN expression RPAREN statement  */
-#line 407 "syntax_analyzer.y"
+#line 407 "22101892.y"
     {
         outlog<<"At line no: "<<lines<<" statement : IF LPAREN expression RPAREN statement"<<endl<<endl;
         string stmt = yyvsp[0]->getname();
@@ -1910,7 +1910,7 @@ yyreduce:
     break;
 
   case 58: /* statement: IF LPAREN expression RPAREN statement ELSE statement  */
-#line 419 "syntax_analyzer.y"
+#line 419 "22101892.y"
     {
         outlog<<"At line no: "<<lines<<" statement : IF LPAREN expression RPAREN statement ELSE statement"<<endl<<endl;
         string stmt1 = yyvsp[-2]->getname();
@@ -1928,7 +1928,7 @@ yyreduce:
     break;
 
   case 59: /* statement: WHILE LPAREN expression RPAREN statement  */
-#line 433 "syntax_analyzer.y"
+#line 433 "22101892.y"
     {
         outlog<<"At line no: "<<lines<<" statement : WHILE LPAREN expression RPAREN statement"<<endl<<endl;
         string stmt = yyvsp[0]->getname();
@@ -1944,7 +1944,7 @@ yyreduce:
     break;
 
   case 60: /* statement: RETURN expression SEMICOLON  */
-#line 445 "syntax_analyzer.y"
+#line 445 "22101892.y"
     {
         outlog<<"At line no: "<<lines<<" statement : RETURN expression SEMICOLON"<<endl<<endl;
         outlog<<"return "<<yyvsp[-1]->getname()<<";"<<endl<<endl;
@@ -1954,7 +1954,7 @@ yyreduce:
     break;
 
   case 61: /* statement: PRINTF LPAREN ID RPAREN SEMICOLON  */
-#line 451 "syntax_analyzer.y"
+#line 451 "22101892.y"
     {
         outlog<<"At line no: "<<lines<<" statement : PRINTLN LPAREN ID RPAREN SEMICOLON"<<endl<<endl;
         outlog<<"printf("<<yyvsp[-2]->getname()<<");"<<endl<<endl;
@@ -2157,7 +2157,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 458 "syntax_analyzer.y"
+#line 458 "22101892.y"
 
 
 int main(int argc, char *argv[])
@@ -2169,7 +2169,7 @@ int main(int argc, char *argv[])
     }
     
     yyin = fopen(argv[1], "r");
-    outlog.open("my_log.txt", ios::trunc);
+    outlog.open("22101892_log.txt", ios::trunc);
     
     if(yyin == NULL)
     {

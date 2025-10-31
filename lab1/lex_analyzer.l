@@ -14,7 +14,6 @@ extern YYSTYPE yylval;
 using namespace std;
 
 void yyerror(char *);
-{/*have to design a error message*/}
 
 
 string loglist;
@@ -24,6 +23,7 @@ extern int lines;
 extern ofstream outlog;
 
 %}
+
 
 /* Regular Definitions */
 
@@ -40,7 +40,7 @@ float  ({digit}+\.{digit}*([Ee][+-]?{digit}+)?)|(\.{digit}+([Ee][+-]?{digit}+)?)
 %%
 
 {ws}		{ /* ignore whitespace */ }
-{newline}	{ /* do necessary bookkeeping (line number tracking etc.) */ }
+{newline}	{ lines++; /* do necessary bookkeeping (line number tracking etc.) */ }
 
 if          { 
                 loglist="Line no "+to_string(lines)+": Token <IF> Lexeme "+yytext+" found"+"\n"+"\n";
@@ -140,7 +140,7 @@ goto      {
                 return GOTO; }
 
 printf    { 
-                loglist="Line no "+to_string(lines)+": Token <PRINTF> Lexeme "+yytext+" found"+"\n"+"\n";
+                loglist="Line no "+to_string(lines)+": Token <PRINTLN> Lexeme "+yytext+" found"+"\n"+"\n";
                 outlog<<loglist; 
                 return PRINTF; }
 
@@ -241,10 +241,16 @@ printf    {
 			    outlog<<loglist;
                 return CONST_FLOAT;
             }
-{id}       {
-                symbol_info *s = new symbol_info((string)yytext,"ID");
+"&&"|"||"   {
+                symbol_info *s = new symbol_info((string)yytext,"LOGICOP");
                 yylval = (YYSTYPE)s;
-                loglist="Line no "+to_string(lines)+": Token <ID> Lexeme "+yytext+" found"+"\n"+"\n";
-			    outlog<<loglist;
-                return ID;
+                loglist="Line no "+to_string(lines)+": Token <LOGICOP> Lexeme "+yytext+" found"+"\n"+"\n";
+                outlog<<loglist;
+                return LOGICOP;
+            }
+
+"!"         {
+                loglist="Line no "+to_string(lines)+": Token <NOT> Lexeme "+yytext+" found"+"\n"+"\n";
+                outlog<<loglist;
+                return NOT;
             }

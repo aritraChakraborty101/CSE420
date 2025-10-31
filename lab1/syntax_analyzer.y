@@ -1,24 +1,27 @@
 %{
-
+#include<bits/stdc++.h>
 #include"symbol_info.h"
-
 #define YYSTYPE symbol_info*
 
 int yyparse(void);
 int yylex(void);
-
 extern FILE *yyin;
 
-
 ofstream outlog;
+int lines = 1;
 
-int lines;
-
-// declare any other variables or functions needed here
-
+void yyerror(char *s) 
+{
+    cout << "Error at line " << lines << ": " << s << endl;
+}
 %}
 
-%token IF ELSE FOR ADDOP INCOP MULOP FLOAT DOUBLE VOID RETURN SWITCH CASE DEFAULT CONTINUE GOTO PRINTLN SEMICOLON COMMA ID LTHIRD RTHIRD CONST_INT CONST_FLOAT LCURL RCURL
+// Declare ALL tokens used in your lexer
+%token IF ELSE FOR WHILE DO BREAK INT CHAR FLOAT DOUBLE VOID RETURN 
+%token SWITCH CASE DEFAULT CONTINUE GOTO PRINTF
+%token ADDOP INCOP DECOP MULOP RELOP ASSIGNOP LOGICOP NOT
+%token LPAREN RPAREN LCURL RCURL LTHIRD RTHIRD SEMICOLON COMMA
+%token ID CONST_INT CONST_FLOAT
 
 %%
 
@@ -355,7 +358,10 @@ arguments : arguments COMMA logic_expression
           ;
 func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement
 		{	
-
+			outlog<<"At line no: "<<lines<<" func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement "<<endl<<endl;
+			outlog<<$1->getname()<<" "<<$2->getname()<<"("<<$4->getname()<<")\n"<<$6->getname()<<endl<<endl;
+			
+			$$ = new symbol_info($1->getname()+" "+$2->getname()+"("+$4->getname()+")\n"+$6->getname(),"func_def");
 		}
 		| type_specifier ID LPAREN RPAREN compound_statement
 		{
@@ -367,38 +373,112 @@ func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statem
 		}
  		;
 
-statement : FOR LPAREN expression_statement expression_statement expression RPAREN statement
-	  {
-	    	outlog<<"At line no: "<<lines<<" statement : FOR LPAREN expression_statement expression_statement expression RPAREN statement "<<endl<<endl;
-			outlog<<"for("<<$3->getname()<<$4->getname()<<$5->getname()<<")\n"<<$7->getname()<<endl<<endl;
-			
-			$$ = new symbol_info("for("+$3->getname()+$4->getname()+$5->getname()+")\n"+$7->getname(),"stmnt");
-	  }
+statement : var_declaration
+    {
+        outlog<<"At line no: "<<lines<<" statement : var_declaration "<<endl<<endl;
+        outlog<<$1->getname()<<endl<<endl;
+        $$ = $1;
+    }
+    | expression_statement
+    {
+        outlog<<"At line no: "<<lines<<" statement : expression_statement "<<endl<<endl;
+        outlog<<$1->getname()<<endl<<endl;
+        $$ = $1;
+    }
+    | compound_statement
+    {
+        outlog<<"At line no: "<<lines<<" statement : compound_statement "<<endl<<endl;
+        outlog<<$1->getname()<<endl<<endl;
+        $$ = $1;
+    }
+    | FOR LPAREN expression_statement expression_statement expression RPAREN statement
+    {
+        outlog<<"At line no: "<<lines<<" statement : FOR LPAREN expression_statement expression_statement expression RPAREN statement"<<endl<<endl;
+        string stmt = $7->getname();
+        if(stmt[0] == '{') {
+            outlog<<"for("<<$3->getname()<<$4->getname()<<$5->getname()<<")\n"<<stmt<<endl<<endl;
+            $$ = new symbol_info("for("+$3->getname()+$4->getname()+$5->getname()+")\n"+stmt,"statement");
+        } else {
+            outlog<<"for("<<$3->getname()<<$4->getname()<<$5->getname()<<")"<<stmt<<endl<<endl;
+            $$ = new symbol_info("for("+$3->getname()+$4->getname()+$5->getname()+")"+stmt,"statement");
+        }
+    }
+    | IF LPAREN expression RPAREN statement
+    {
+        outlog<<"At line no: "<<lines<<" statement : IF LPAREN expression RPAREN statement"<<endl<<endl;
+        string stmt = $5->getname();
+        if(stmt[0] == '{') {
+            outlog<<"if("<<$3->getname()<<")\n"<<stmt<<endl<<endl;
+            $$ = new symbol_info("if("+$3->getname()+")\n"+stmt,"statement");
+        } else {
+            outlog<<"if("<<$3->getname()<<")"<<stmt<<endl<<endl;
+            $$ = new symbol_info("if("+$3->getname()+")"+stmt,"statement");
+        }
+    }
+    | IF LPAREN expression RPAREN statement ELSE statement
+    {
+        outlog<<"At line no: "<<lines<<" statement : IF LPAREN expression RPAREN statement ELSE statement"<<endl<<endl;
+        string stmt1 = $5->getname();
+        string stmt2 = $7->getname();
+        string output = "if("+$3->getname()+")";
+        if(stmt1[0] == '{') output += "\n" + stmt1;
+        else output += stmt1;
+        output += "\nelse\n";
+        if(stmt2[0] == '{') output += stmt2;
+        else output += stmt2;
+        outlog<<output<<endl<<endl;
+        $$ = new symbol_info(output,"statement");
+    }
+    | WHILE LPAREN expression RPAREN statement
+    {
+        outlog<<"At line no: "<<lines<<" statement : WHILE LPAREN expression RPAREN statement"<<endl<<endl;
+        string stmt = $5->getname();
+        if(stmt[0] == '{') {
+            outlog<<"while("<<$3->getname()<<")\n"<<stmt<<endl<<endl;
+            $$ = new symbol_info("while("+$3->getname()+")\n"+stmt,"statement");
+        } else {
+            outlog<<"while("<<$3->getname()<<")"<<stmt<<endl<<endl;
+            $$ = new symbol_info("while("+$3->getname()+")"+stmt,"statement");
+        }
+    }
+    | RETURN expression SEMICOLON
+    {
+        outlog<<"At line no: "<<lines<<" statement : RETURN expression SEMICOLON"<<endl<<endl;
+        outlog<<"return "<<$2->getname()<<";"<<endl<<endl;
+        $$ = new symbol_info("return "+$2->getname()+";","statement");
+    }
+    | PRINTF LPAREN ID RPAREN SEMICOLON
+    {
+        outlog<<"At line no: "<<lines<<" statement : PRINTLN LPAREN ID RPAREN SEMICOLON"<<endl<<endl;
+        outlog<<"printf("<<$3->getname()<<");"<<endl<<endl;
+        $$ = new symbol_info("printf("+$3->getname()+");","statement");
+    }
+    ;
 
 %%
 
 int main(int argc, char *argv[])
 {
-	if(argc != 2) 
-	{
-        // check if filename given
-	}
-	yyin = fopen(argv[1], "r");
-	outlog.open("my_log.txt", ios::trunc);
-	
-	if(yyin == NULL)
-	{
-		cout<<"Couldn't open file"<<endl;
-		return 0;
-	}
+    if(argc != 2) 
+    {
+        cout << "Usage: " << argv[0] << " <input_file>" << endl;
+        return 1;
+    }
     
-	yyparse();
-	
-	//print number of lines
-	
-	outlog.close();
-	
-	fclose(yyin);
-	
-	return 0;
+    yyin = fopen(argv[1], "r");
+    outlog.open("my_log.txt", ios::trunc);
+    
+    if(yyin == NULL)
+    {
+        cout << "Couldn't open file" << endl;
+        return 0;
+    }
+    
+    lines = 1;
+    yyparse();
+    
+    outlog.close();
+    fclose(yyin);
+    
+    return 0;
 }

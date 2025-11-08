@@ -11,6 +11,17 @@ private:
     int hash_function(string name)
     {
         // write your hash function here
+        int hash_val = 0;
+        for (char c : name) {
+            if (c >= 'a' && c <= 'z') {
+                hash_val += (c - 'a' + 1);
+            } else if (c >= 'A' && c <= 'Z') {
+                hash_val += (c - 'A' + 1);
+            } else {
+                hash_val += c;
+            }
+        }
+        return hash_val % bucket_count;
     }
 
 public:
@@ -27,10 +38,99 @@ public:
     // you can add more methods if you need
 };
 
-// complete the methods of scope_table class
-void scope_table::print_scope_table(ofstream& outlog)
-{
-    outlog << "ScopeTable # "+ to_string(unique_id) << endl;
 
-    //iterate through the current scope table and print the symbols and all relevant information
+// Default constructor
+scope_table::scope_table(){
+    this->bucket_count = 10;
+    this->unique_id = 0;
+    this->parent_scope = nullptr;
+    table.resize(bucket_count);
+}
+
+// Parameterized constructor
+scope_table::scope_table(int bucket_count, int unique_id, scope_table *parent_scope){
+    this->bucket_count = bucket_count;
+    this->unique_id = unique_id;
+    this->parent_scope = parent_scope;
+    table.resize(bucket_count);
+}
+
+// Get parent scope
+scope_table *scope_table::get_parent_scope(){
+    return parent_scope;
+}
+
+// Get unique ID
+int scope_table::get_unique_id(){
+    return unique_id;
+}
+
+// Lookup symbol in this scope only
+symbol_info *scope_table::lookup_in_scope(symbol_info* symbol){
+    int index = hash_function(symbol->get_name());
+    
+    for (auto& sym : table[index]){
+        if (sym->get_name() == symbol->get_name()){
+            return sym;
+        }
+    }
+    return nullptr;
+}
+
+// Insert symbol into this scope
+bool scope_table::insert_in_scope(symbol_info* symbol){
+    // Check if symbol already exists in current scope
+    if (lookup_in_scope(symbol) != nullptr){
+        return false; // Symbol already exists
+    }
+    
+    int index = hash_function(symbol->get_name());
+    table[index].push_back(symbol);
+    return true;
+}
+
+// Delete symbol from this scope
+bool scope_table::delete_from_scope(symbol_info* symbol){
+    int index = hash_function(symbol->get_name());
+    
+    for (auto it = table[index].begin(); it != table[index].end(); ++it){
+        if ((*it)->get_name() == symbol->get_name()){
+            delete *it; 
+            table[index].erase(it);
+            return true;
+        }
+    }
+    return false;
+}
+
+// Print scope table
+void scope_table::print_scope_table(ofstream& outlog){
+    outlog << "ScopeTable # " + to_string(unique_id) << endl;
+    
+    for (int i = 0; i < bucket_count; i++){
+        if (!table[i].empty()){
+            outlog << i << " --> ";
+            int position = 1;
+            for (auto& sym : table[i]){
+                outlog << "< " << sym->get_name() << " : " << sym->get_type() << " > ";
+                if (position < table[i].size()){
+                    outlog << " ";
+                }
+                position++;
+            }
+            outlog << endl;
+        }
+    }
+    outlog << endl;
+}
+
+// Destructor
+scope_table::~scope_table(){
+    for (int i = 0; i < bucket_count; i++){
+        for (auto& sym : table[i])
+        {
+            delete sym;
+        }
+        table[i].clear();
+    }
 }

@@ -1,100 +1,91 @@
-%option noyywrap
+#include <bits/stdc++.h>
+using namespace std;
 
-%{
+// Define the category of the symbol (identifier, function, or array)
+enum class SymbolCategory
+{
+    IDENTIFIER,
+    ARRAY_TYPE,
+    FUNCTION_TYPE
+};
 
-#include"symbol_info.h"
+class SymbolInfo
+{
+private:
+    string idName;                 // The symbol name (identifier)
+    string dataType;               // The data or return type (int, float, void, etc.)
+    SymbolCategory category;       // The category (variable/array/function)
+    vector<SymbolInfo*> paramList; // Function parameters
+    int arrLength;                 // For arrays: holds size; otherwise -1
 
-#define YYSTYPE symbol_info*
+public:
+    // Default + parameterized constructor
+    SymbolInfo(string id = "", string dtype = "", SymbolCategory cat = SymbolCategory::IDENTIFIER, 
+               const vector<SymbolInfo*>& params = {}, int length = -1)
+        : idName(id), dataType(dtype), category(cat), arrLength(length)
+    {
+        if (cat == SymbolCategory::FUNCTION_TYPE)
+        {
+            paramList = params;
+        }
+    }
 
-#include "y.tab.h"
+    // Copy constructor for safe object duplication
+    SymbolInfo(const SymbolInfo& other)
+    {
+        idName = other.idName;
+        dataType = other.dataType;
+        category = other.category;
+        arrLength = other.arrLength;
 
-extern YYSTYPE yylval;
+        // Deep copy of parameter list
+        for (auto* p : other.paramList)
+        {
+            paramList.push_back(new SymbolInfo(*p));
+        }
+    }
 
-void yyerror(char *);
+    // ------------------- Basic Accessors -------------------
+    string getIdentifier() const { return idName; }
+    string getDataType() const { return dataType; }
+    SymbolCategory getCategory() const { return category; }
+    int getArrayLength() const { return arrLength; }
 
-extern int lines;
+    // ------------------- Mutators -------------------
+    void setIdentifier(const string& id) { idName = id; }
+    void setDataType(const string& dtype) { dataType = dtype; }
+    void setCategory(SymbolCategory cat) { category = cat; }
+    void setArrayLength(int len) { arrLength = len; }
 
-%}
+    // ------------------- Parameter Related -------------------
+    void setParameters(const vector<SymbolInfo*>& params)
+    {
+        paramList = params;
+    }
 
-delim	 [ \t\v\r\f]
-newline  \r?\n
-ws		 {delim}+
-letter_	 [A-Za-z_]
-digit	 [0-9]
-id		 {letter_}({letter_}|{digit})*
-integers {digit}+
-floats	 {digit}*(\.{digit}+)|{digit}*(\.{digit}+)?((E|e)[-]?{digit}+)
+    const vector<SymbolInfo*>& getParameters() const
+    {
+        return paramList;
+    }
 
-%%
+    void addParameter(SymbolInfo* param)
+    {
+        paramList.push_back(param);
+    }
 
-{ws}		{ /* ignore whitespace */ }
-{newline}	{ lines++; }
+    // ------------------- Type Checking Helpers -------------------
+    bool isVariable() const { return category == SymbolCategory::IDENTIFIER; }
+    bool isArray() const { return category == SymbolCategory::ARRAY_TYPE; }
+    bool isFunction() const { return category == SymbolCategory::FUNCTION_TYPE; }
 
-if          { return IF; }
-else		{ return ELSE; }
-for         { return FOR; }
-while       { return WHILE; }
-do          { return DO; }
-break       { return BREAK; }
-continue    { return CONTINUE; }
-return      { return RETURN; }
-int         { return INT; }
-float       { return FLOAT; }
-char        { return CHAR; }
-void        { return VOID; }
-double      { return DOUBLE; }
-switch      { return SWITCH; }
-case        { return CASE; }
-default     { return DEFAULT; }
-printf      { return PRINTLN; }
+    // ------------------- Destructor -------------------
+    ~SymbolInfo()
+    {
+        for (auto* param : paramList)
+        {
+            delete param;
+        }
+        paramList.clear();
+    }
+};
 
-"+"|"-"	    {
-                symbol_info *s = new symbol_info((string)yytext,"ADDOP");
-                yylval = (YYSTYPE)s;
-                return ADDOP;
-		    }
-"*"|"/"|"%"    {
-                symbol_info *s = new symbol_info((string)yytext,"MULOP");
-                yylval = (YYSTYPE)s;
-                return MULOP;
-            }
-"++"        { return INCOP; }
-"--"        { return DECOP; }
-"<"|">"|"<="|">="|"=="|"!=" {
-                symbol_info *s = new symbol_info((string)yytext,"RELOP");
-                yylval = (YYSTYPE)s;
-                return RELOP;
-            }
-
-"="         { return ASSIGNOP; }
-"&&"|"||"   {
-		   	symbol_info *s = new symbol_info((string)yytext,"LOGICOP");
-			yylval = (YYSTYPE)s;
-			return LOGICOP;
-		    }
-
-"!"        { return NOT; }
-"("        { return LPAREN; }
-")"        { return RPAREN; }
-"{"        { return LCURL; }
-"}"        { return RCURL; }
-"["        { return LTHIRD; }
-"]"        { return RTHIRD; }
-";"        { return SEMICOLON; }
-","        { return COMMA; }
-
-{id}       {
-                symbol_info *s = new symbol_info((string)yytext,"ID");
-                yylval = (YYSTYPE)s;
-                return ID;
-            }
-{integers} {
-                symbol_info *s = new symbol_info((string)yytext,"INT");
-                yylval = (YYSTYPE)s;
-                return CONST_INT;
-            }
-{floats}   {
-                symbol_info *s = new symbol_info((string)yytext,"FLOAT");
-                yylval = (YYSTYPE)s;
-                return CONST_FLOAT;
-            }

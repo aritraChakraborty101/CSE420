@@ -49,26 +49,26 @@ default     { return DEFAULT; }
 printf      { return PRINTLN; }
 
 "+"|"-"	    {
-                symbol_info *s = new symbol_info((string)yytext,"ADDOP");
+                symbol_info *s = new symbol_info((string)yytext,"ADDOP", symbol_type::VARIABLE);
                 yylval = (YYSTYPE)s;
                 return ADDOP;
 		    }
 "*"|"/"|"%"    {
-                symbol_info *s = new symbol_info((string)yytext,"MULOP");
+                symbol_info *s = new symbol_info((string)yytext,"MULOP", symbol_type::VARIABLE);
                 yylval = (YYSTYPE)s;
                 return MULOP;
             }
 "++"        { return INCOP; }
 "--"        { return DECOP; }
 "<"|">"|"<="|">="|"=="|"!=" {
-                symbol_info *s = new symbol_info((string)yytext,"RELOP");
+                symbol_info *s = new symbol_info((string)yytext,"RELOP", symbol_type::VARIABLE);
                 yylval = (YYSTYPE)s;
                 return RELOP;
             }
 
 "="         { return ASSIGNOP; }
 "&&"|"||"   {
-		   	symbol_info *s = new symbol_info((string)yytext,"LOGICOP");
+		   	symbol_info *s = new symbol_info((string)yytext,"LOGICOP", symbol_type::VARIABLE);
 			yylval = (YYSTYPE)s;
 			return LOGICOP;
 		    }
@@ -84,17 +84,17 @@ printf      { return PRINTLN; }
 ","        { return COMMA; }
 
 {id}       {
-                symbol_info *s = new symbol_info((string)yytext,"ID");
+                symbol_info *s = new symbol_info((string)yytext,"ID", symbol_type::VARIABLE);
                 yylval = (YYSTYPE)s;
                 return ID;
             }
 {integers} {
-                symbol_info *s = new symbol_info((string)yytext,"INT");
+                symbol_info *s = new symbol_info((string)yytext,"INT", symbol_type::VARIABLE);
                 yylval = (YYSTYPE)s;
                 return CONST_INT;
             }
 {floats}   {
-                symbol_info *s = new symbol_info((string)yytext,"FLOAT");
+                symbol_info *s = new symbol_info((string)yytext,"FLOAT", symbol_type::VARIABLE);
                 yylval = (YYSTYPE)s;
                 return CONST_FLOAT;
             }

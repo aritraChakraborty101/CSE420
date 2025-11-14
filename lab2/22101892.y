@@ -32,6 +32,7 @@ symbol_info* addSymbol(string name, string type, symbol_type symType, int arrSiz
 
 void enterFn(string name, string return_type){
 	fn_name.push(addSymbol(name, return_type, symbol_type::FUNCTION));
+	sym_table->insert(fn_name.top());
 	sym_table->enter_scope();	
 }
 
@@ -41,9 +42,7 @@ void enterScopeDecl(){
 
 
 void exitScopeDecl(){
-	
 	sym_table->print_all_scopes(outlog);
-	outlog<<"Exiting scope for declaration at line "<<lines<<endl<<endl;
 	sym_table->exit_scope();
 }
 
@@ -108,34 +107,33 @@ unit : var_declaration
 	 }
      ;
 
-func_definition : type_specifier ID LPAREN {enterFn($2->get_name(), $1->get_name());} parameter_list RPAREN compound_statement
+func_definition : type_specifier ID LPAREN {enterFn($2->get_name(), $1->get_name());} parameter_list RPAREN {outlog << "New ScopeTable with ID " << sym_table->get_current_scope()->get_unique_id() << " created" << endl << endl;} compound_statement
 		{	
-			outlog<<"At line no: "<<lines<<" func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement "<<endl<<endl;
-			outlog<<$1->get_name()<<" "<<$2->get_name()<<"("+$5->get_name()+")\n"<<$7->get_name()<<endl<<endl;
+			exitScopeDecl();
+			fn_name.pop();
 			
-			$$ = new symbol_info($1->get_name()+" "+$2->get_name()+"("+$5->get_name()+")\n"+$7->get_name(),"func_def", symbol_type::VARIABLE);	
+			outlog<<"At line no: "<<lines<<" func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement "<<endl<<endl;
+			outlog<<$1->get_name()<<" "<<$2->get_name()<<"("+$5->get_name()+")\n"<<$8->get_name()<<endl<<endl;
+			
+			$$ = new symbol_info($1->get_name()+" "+$2->get_name()+"("+$5->get_name()+")\n"+$8->get_name(),"func_def", symbol_type::VARIABLE);	
 			
 			// The function definition is complete.
             // You can now insert necessary information about the function into the symbol table
             // However, note that the scope of the function and the scope of the compound statement are different.
-			sym_table->insert(fn_name.top());
+		}
+		| type_specifier ID LPAREN RPAREN {enterFn($2->get_name(), $1->get_name());} {outlog << "New ScopeTable with ID " << sym_table->get_current_scope()->get_unique_id() << " created" << endl << endl;} compound_statement
+		{
 			exitScopeDecl();
 			fn_name.pop();
-		}
-		| type_specifier ID LPAREN RPAREN {enterFn($2->get_name(), $1->get_name());} compound_statement
-		{
 			
 			outlog<<"At line no: "<<lines<<" func_definition : type_specifier ID LPAREN RPAREN compound_statement "<<endl<<endl;
-			outlog<<$1->get_name()<<" "<<$2->get_name()<<"()\n"<<$6->get_name()<<endl<<endl;
+			outlog<<$1->get_name()<<" "<<$2->get_name()<<"()\n"<<$7->get_name()<<endl<<endl;
 			
-			$$ = new symbol_info($1->get_name()+" "+$2->get_name()+"()\n"+$6->get_name(),"func_def", symbol_type::VARIABLE);	
+			$$ = new symbol_info($1->get_name()+" "+$2->get_name()+"()\n"+$7->get_name(),"func_def", symbol_type::VARIABLE);	
 			
 			// The function definition is complete.
             // You can now insert necessary information about the function into the symbol table
             // However, note that the scope of the function and the scope of the compound statement are different.
-			sym_table->insert(fn_name.top());
-			exitScopeDecl();
-			fn_name.pop();
 		}
  		;
 

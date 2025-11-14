@@ -1,3 +1,5 @@
+New ScopeTable with ID 1 created
+
 At line no: 1 type_specifier : INT 
 
 int
@@ -17,6 +19,8 @@ float
 At line no: 1 parameter_list : parameter_list COMMA type_specifier ID 
 
 int a,float b
+
+New ScopeTable with ID 2 created
 
 At line no: 2 variable : ID 
 
@@ -84,25 +88,37 @@ At line no: 3 compound_statement : LCURL statements RCURL
 return a+b;
 }
 
+################################
+
+ScopeTable # 2
+1 --> 
+< a : ID >
+Variable
+Type: int
+
+2 --> 
+< b : ID >
+Variable
+Type: float
+
+ScopeTable # 1
+4 --> 
+< func : ID >
+Function Definition
+Return Type: int
+Number of Parameters: 2
+Parameter Details: int a, float b
+
+################################
+
+Scopetable with ID 2 removed
+
 At line no: 3 func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement 
 
 int func(int a,float b)
 {
 return a+b;
 }
-
-################################
-
-ScopeTable # 2
-1 --> < a : int > 
-2 --> < b : float > 
-4 --> < func : int > 
-
-ScopeTable # 1
-
-################################
-
-Exiting scope for declaration at line 3
 
 At line no: 3 unit : func_definition 
 
@@ -121,6 +137,8 @@ return a+b;
 At line no: 5 type_specifier : VOID 
 
 void
+
+New ScopeTable with ID 3 created
 
 At line no: 6 type_specifier : INT 
 
@@ -428,6 +446,70 @@ c=func(a,b);
 float d;
 }
 
+################################
+
+ScopeTable # 3
+1 --> 
+< a : ID >
+Variable
+Type: int
+
+2 --> 
+< b : ID >
+Variable
+Type: int
+
+3 --> 
+< c : ID >
+Variable
+Type: int
+
+4 --> 
+< d : ID >
+Variable
+Type: float
+
+5 --> 
+< e : ID >
+Variable
+Type: int
+
+6 --> 
+< f : ID >
+Array
+Type: int
+Size: 10
+
+7 --> 
+< g : ID >
+Array
+Type: int
+Size: 11
+
+9 --> 
+< i : ID >
+Variable
+Type: int
+
+ScopeTable # 1
+4 --> 
+< func : ID >
+Function Definition
+Return Type: int
+Number of Parameters: 2
+Parameter Details: int a, float b
+
+7 --> 
+< main : ID >
+Function Definition
+Return Type: void
+Number of Parameters: 0
+Parameter Details: 
+
+################################
+
+Scopetable with ID 3 removed
+
 At line no: 13 func_definition : type_specifier ID LPAREN RPAREN compound_statement 
 
 void main()
@@ -439,24 +521,6 @@ b=2;
 c=func(a,b);
 float d;
 }
-
-################################
-
-ScopeTable # 3
-1 --> < a : int > 
-2 --> < b : int > 
-3 --> < c : int > 
-4 --> < d : float > 
-5 --> < e : int > 
-6 --> < f : int > 
-7 --> < g : int >  < main : void > 
-9 --> < i : int > 
-
-ScopeTable # 1
-
-################################
-
-Exiting scope for declaration at line 13
 
 At line no: 13 unit : func_definition 
 
@@ -493,6 +557,19 @@ Symbol Table
 ################################
 
 ScopeTable # 1
+4 --> 
+< func : ID >
+Function Definition
+Return Type: int
+Number of Parameters: 2
+Parameter Details: int a, float b
+
+7 --> 
+< main : ID >
+Function Definition
+Return Type: void
+Number of Parameters: 0
+Parameter Details: 
 
 ################################
 

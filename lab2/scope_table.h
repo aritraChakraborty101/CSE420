@@ -105,23 +105,42 @@ bool scope_table::delete_from_scope(symbol_info* symbol){
 
 // Print scope table
 void scope_table::print_scope_table(ofstream& outlog){
-    outlog << "ScopeTable # " + to_string(unique_id) << endl;
+    outlog << "ScopeTable # " << unique_id << endl;
     
     for (int i = 0; i < bucket_count; i++){
         if (!table[i].empty()){
-            outlog << i << " --> ";
-            int position = 1;
+            outlog << i << " --> " << endl;
             for (auto& sym : table[i]){
-                outlog << "< " << sym->get_name() << " : " << sym->get_type() << " > ";
-                if (position < table[i].size()){
-                    outlog << " ";
+                outlog << "< " << sym->get_name() << " : ID >" << endl;
+                
+                // Print detailed information based on symbol type
+                if (sym->is_function()){
+                    outlog << "Function Definition" << endl;
+                    outlog << "Return Type: " << sym->get_type() << endl;
+                    outlog << "Number of Parameters: " << sym->get_parameters().size() << endl;
+                    outlog << "Parameter Details: ";
+                    bool first = true;
+                    for (auto& param : sym->get_parameters()){
+                        if (!first) outlog << ", ";
+                        outlog << param->get_type();
+                        if (!param->get_name().empty()) {
+                            outlog << " " << param->get_name();
+                        }
+                        first = false;
+                    }
+                    outlog << endl;
+                } else if (sym->is_array()){
+                    outlog << "Array" << endl;
+                    outlog << "Type: " << sym->get_type() << endl;
+                    outlog << "Size: " << sym->get_array_size() << endl;
+                } else {
+                    outlog << "Variable" << endl;
+                    outlog << "Type: " << sym->get_type() << endl;
                 }
-                position++;
+                outlog << endl;
             }
-            outlog << endl;
         }
     }
-    outlog << endl;
 }
 
 // Destructor

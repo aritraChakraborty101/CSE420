@@ -1,5 +1,7 @@
 #include "scope_table.h"
 
+extern ofstream outlog;
+
 class symbol_table
 {
 private:
@@ -16,6 +18,7 @@ public:
     symbol_info* lookup(symbol_info* symbol);
     void print_current_scope(ofstream& outlog);
     void print_all_scopes(ofstream& outlog);
+    scope_table* get_current_scope() { return current_scope; }
 
     // you can add more methods if you need 
 };
@@ -39,6 +42,7 @@ symbol_table::symbol_table(int bucket_count){
     this->bucket_count = bucket_count;
     this->current_scope_id = 1;
     this->current_scope = new scope_table(bucket_count, current_scope_id, nullptr);
+    outlog << "New ScopeTable with ID " << current_scope_id << " created" << endl << endl;
 }
 
 // Destructor
@@ -60,9 +64,11 @@ void symbol_table::enter_scope(){
 // Exit current scope
 void symbol_table::exit_scope(){
     if (current_scope != nullptr){
+        int id = current_scope->get_unique_id();
         scope_table *temp = current_scope;
         current_scope = current_scope->get_parent_scope();
         delete temp;
+        outlog << "Scopetable with ID " << id << " removed" << endl << endl;
     }
 }
 

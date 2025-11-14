@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 1 "syntax_analyzer.y"
+#line 1 "22101892.y"
 
 
 #include "symbol_table.h"
@@ -102,6 +102,7 @@ symbol_info* addSymbol(string name, string type, symbol_type symType, int arrSiz
 
 void enterFn(string name, string return_type){
 	fn_name.push(addSymbol(name, return_type, symbol_type::FUNCTION));
+	sym_table->insert(fn_name.top());
 	sym_table->enter_scope();	
 }
 
@@ -111,9 +112,7 @@ void enterScopeDecl(){
 
 
 void exitScopeDecl(){
-	
 	sym_table->print_all_scopes(outlog);
-	outlog<<"Exiting scope for declaration at line "<<lines<<endl<<endl;
 	sym_table->exit_scope();
 }
 
@@ -128,7 +127,7 @@ void yyerror(char *s)
 }
 
 
-#line 132 "y.tab.c"
+#line 131 "y.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -321,24 +320,26 @@ enum yysymbol_kind_t
   YYSYMBOL_func_definition = 44,           /* func_definition  */
   YYSYMBOL_45_1 = 45,                      /* $@1  */
   YYSYMBOL_46_2 = 46,                      /* $@2  */
-  YYSYMBOL_parameter_list = 47,            /* parameter_list  */
-  YYSYMBOL_compound_statement = 48,        /* compound_statement  */
-  YYSYMBOL_var_declaration = 49,           /* var_declaration  */
-  YYSYMBOL_type_specifier = 50,            /* type_specifier  */
-  YYSYMBOL_declaration_list = 51,          /* declaration_list  */
-  YYSYMBOL_statements = 52,                /* statements  */
-  YYSYMBOL_statement = 53,                 /* statement  */
-  YYSYMBOL_expression_statement = 54,      /* expression_statement  */
-  YYSYMBOL_variable = 55,                  /* variable  */
-  YYSYMBOL_expression = 56,                /* expression  */
-  YYSYMBOL_logic_expression = 57,          /* logic_expression  */
-  YYSYMBOL_rel_expression = 58,            /* rel_expression  */
-  YYSYMBOL_simple_expression = 59,         /* simple_expression  */
-  YYSYMBOL_term = 60,                      /* term  */
-  YYSYMBOL_unary_expression = 61,          /* unary_expression  */
-  YYSYMBOL_factor = 62,                    /* factor  */
-  YYSYMBOL_argument_list = 63,             /* argument_list  */
-  YYSYMBOL_arguments = 64                  /* arguments  */
+  YYSYMBOL_47_3 = 47,                      /* $@3  */
+  YYSYMBOL_48_4 = 48,                      /* $@4  */
+  YYSYMBOL_parameter_list = 49,            /* parameter_list  */
+  YYSYMBOL_compound_statement = 50,        /* compound_statement  */
+  YYSYMBOL_var_declaration = 51,           /* var_declaration  */
+  YYSYMBOL_type_specifier = 52,            /* type_specifier  */
+  YYSYMBOL_declaration_list = 53,          /* declaration_list  */
+  YYSYMBOL_statements = 54,                /* statements  */
+  YYSYMBOL_statement = 55,                 /* statement  */
+  YYSYMBOL_expression_statement = 56,      /* expression_statement  */
+  YYSYMBOL_variable = 57,                  /* variable  */
+  YYSYMBOL_expression = 58,                /* expression  */
+  YYSYMBOL_logic_expression = 59,          /* logic_expression  */
+  YYSYMBOL_rel_expression = 60,            /* rel_expression  */
+  YYSYMBOL_simple_expression = 61,         /* simple_expression  */
+  YYSYMBOL_term = 62,                      /* term  */
+  YYSYMBOL_unary_expression = 63,          /* unary_expression  */
+  YYSYMBOL_factor = 64,                    /* factor  */
+  YYSYMBOL_argument_list = 65,             /* argument_list  */
+  YYSYMBOL_arguments = 66                  /* arguments  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -666,16 +667,16 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  10
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   156
+#define YYLAST   173
 
 /* YYNTOKENS -- Number of terminals.  */
 #define YYNTOKENS  40
 /* YYNNTS -- Number of nonterminals.  */
-#define YYNNTS  25
+#define YYNNTS  27
 /* YYNRULES -- Number of rules.  */
-#define YYNRULES  64
+#define YYNRULES  66
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  116
+#define YYNSTATES  118
 
 /* YYMAXUTOK -- Last valid token kind.  */
 #define YYMAXUTOK   294
@@ -728,13 +729,13 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,    69,    69,    79,    86,    95,   102,   111,   111,   125,
-     125,   142,   154,   165,   177,   190,   201,   213,   224,   232,
-     240,   250,   261,   270,   279,   291,   298,   307,   314,   322,
-     329,   336,   343,   350,   357,   364,   371,   380,   387,   396,
-     404,   413,   420,   429,   436,   445,   452,   461,   469,   478,
-     486,   496,   503,   510,   519,   526,   533,   540,   547,   554,
-     561,   570,   578,   586,   593
+       0,    68,    68,    78,    85,    94,   101,   110,   110,   110,
+     124,   124,   124,   140,   152,   163,   175,   188,   199,   211,
+     222,   230,   238,   248,   259,   268,   277,   289,   296,   305,
+     312,   320,   327,   334,   341,   348,   355,   362,   369,   378,
+     385,   394,   402,   411,   418,   427,   434,   443,   450,   459,
+     467,   476,   484,   494,   501,   508,   517,   524,   531,   538,
+     545,   552,   559,   568,   576,   584,   591
 };
 #endif
 
@@ -757,7 +758,7 @@ static const char *const yytname[] =
   "LPAREN", "RPAREN", "LCURL", "RCURL", "LTHIRD", "RTHIRD", "COMMA",
   "SEMICOLON", "CONST_INT", "CONST_FLOAT", "ID", "LOWER_THAN_ELSE",
   "$accept", "start", "program", "unit", "func_definition", "$@1", "$@2",
-  "parameter_list", "compound_statement", "var_declaration",
+  "$@3", "$@4", "parameter_list", "compound_statement", "var_declaration",
   "type_specifier", "declaration_list", "statements", "statement",
   "expression_statement", "variable", "expression", "logic_expression",
   "rel_expression", "simple_expression", "term", "unary_expression",
@@ -771,7 +772,7 @@ yysymbol_name (yysymbol_kind_t yysymbol)
 }
 #endif
 
-#define YYPACT_NINF (-70)
+#define YYPACT_NINF (-73)
 
 #define yypact_value_is_default(Yyn) \
   ((Yyn) == YYPACT_NINF)
@@ -785,18 +786,18 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int16 yypact[] =
 {
-     114,   -70,   -70,   -70,    12,   114,   -70,   -70,   -70,   -23,
-     -70,   -70,    19,   -11,     3,    39,     1,   -70,   -70,   114,
-      44,    51,    46,   -15,    53,   -70,    50,    43,   -70,    46,
-     114,   -70,    56,    68,    69,    72,    67,    73,    67,    67,
-      67,   -70,   -70,   -70,   -70,    32,   -70,   -70,   -70,    79,
-     -70,   -70,    36,    76,   -70,    82,    48,    81,   -70,   -70,
-     -70,    74,   -70,    67,   -10,    67,    78,    84,    15,   -70,
-     -70,    90,    67,    67,   -70,   -70,   -70,   -70,    67,   -70,
-      67,    67,    67,    67,   -70,   101,   -10,   102,   -70,   103,
-     -70,   -70,   104,   105,   107,   -70,   -70,    81,   116,   -70,
-     115,    67,   115,   106,   -70,    67,   -70,   133,   109,   -70,
-     -70,   -70,   115,   115,   -70,   -70
+      13,   -73,   -73,   -73,    15,    13,   -73,   -73,   -73,   -25,
+     -73,   -73,    -5,    24,    -4,    20,    -7,   -73,   -73,    13,
+      17,    30,   -73,   -17,    35,   -73,    34,    45,   -73,    13,
+     -73,    47,    63,   -73,    45,    43,   -73,    56,    57,    64,
+       9,    67,     9,     9,     9,   -73,   -73,   -73,   -73,     6,
+     -73,   -73,   -73,    99,   -73,   -73,    32,    61,   -73,    71,
+      28,    82,   -73,   -73,   -73,   -73,     9,    51,     9,    72,
+      68,    38,   -73,   -73,    80,     9,     9,   -73,   -73,   -73,
+     -73,     9,   -73,     9,     9,     9,     9,    85,    51,    86,
+     -73,    87,   -73,   -73,    88,    77,    89,   -73,   -73,    82,
+     100,   -73,   135,     9,   135,    90,   -73,     9,   -73,   117,
+      94,   -73,   -73,   -73,   135,   135,   -73,   -73
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -804,34 +805,34 @@ static const yytype_int16 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       0,    18,    19,    20,     0,     2,     4,     6,     5,     0,
-       1,     3,    23,     0,     7,     0,     0,    17,     9,     0,
-       0,    21,     0,     0,    14,    24,     0,     0,    10,     0,
-       0,    13,     0,     0,     0,     0,     0,     0,     0,     0,
-       0,    16,    37,    57,    58,    39,    28,    30,    27,     0,
-      25,    29,    54,     0,    41,    43,    45,    47,    49,    53,
-       8,    12,    22,     0,     0,     0,     0,     0,    54,    51,
-      52,     0,    62,     0,    15,    26,    59,    60,     0,    38,
-       0,     0,     0,     0,    11,     0,     0,     0,    36,     0,
-      56,    64,     0,    61,     0,    42,    44,    48,    46,    50,
-       0,     0,     0,     0,    55,     0,    40,    32,     0,    34,
-      35,    63,     0,     0,    33,    31
+       0,    20,    21,    22,     0,     2,     4,     6,     5,     0,
+       1,     3,    25,     0,     7,     0,     0,    19,    10,     0,
+       0,    23,    11,     0,    16,    26,     0,     0,     8,     0,
+      15,     0,     0,    12,     0,    14,    24,     0,     0,     0,
+       0,     0,     0,     0,     0,    18,    39,    59,    60,    41,
+      30,    32,    29,     0,    27,    31,    56,     0,    43,    45,
+      47,    49,    51,    55,     9,    13,     0,     0,     0,     0,
+       0,    56,    53,    54,     0,    64,     0,    17,    28,    61,
+      62,     0,    40,     0,     0,     0,     0,     0,     0,     0,
+      38,     0,    58,    66,     0,    63,     0,    44,    46,    50,
+      48,    52,     0,     0,     0,     0,    57,     0,    42,    34,
+       0,    36,    37,    65,     0,     0,    35,    33
 };
 
 /* YYPGOTO[NTERM-NUM].  */
-static const yytype_int16 yypgoto[] =
+static const yytype_int8 yypgoto[] =
 {
-     -70,   -70,   -70,   139,    16,   -70,   -70,   -70,    -9,    30,
-      -8,   -70,   -70,   -47,   -57,   -38,   -32,   -69,    66,    65,
-      75,   -33,   -70,   -70,   -70
+     -73,   -73,   -73,   119,    14,   -73,   -73,   -73,   -73,   -73,
+     -16,    16,    -9,   -73,   -73,   -51,   -60,   -42,   -36,   -72,
+      48,    54,    44,   -37,   -73,   -73,   -73
 };
 
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     4,     5,     6,    46,    19,    22,    23,    47,    48,
-       9,    13,    49,    50,    51,    52,    53,    54,    55,    56,
-      57,    58,    59,    92,    93
+       0,     4,     5,     6,    50,    19,    34,    22,    27,    23,
+      51,    52,     9,    13,    53,    54,    55,    56,    57,    58,
+      59,    60,    61,    62,    63,    94,    95
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -839,84 +840,88 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-      68,    68,    75,    91,    66,    69,    70,    86,    71,    95,
-      38,    24,    10,    28,    29,    12,     7,    39,    40,    30,
-      60,     7,    61,    16,    17,    42,    43,    44,    45,   101,
-       8,    85,    18,    87,    68,     8,   111,    76,    77,    21,
-      68,    94,    68,    68,    68,    68,    33,    14,    34,    35,
-      99,    15,     1,   107,     2,   109,     3,    36,    76,    77,
-      72,    78,    37,    38,    73,   114,   115,    68,    81,   108,
-      39,    40,    82,    27,    41,    20,    27,    25,    42,    43,
-      44,    45,    33,    26,    34,    35,    32,    38,     1,    62,
-       2,    31,     3,    36,    39,    40,    63,    64,    37,    38,
-      65,    67,    83,    43,    44,    45,    39,    40,    80,    27,
-      74,    79,    84,    88,    42,    43,    44,    45,    33,    90,
-      34,    35,    89,     1,     1,     2,     2,     3,     3,    36,
-     100,   102,   103,   104,    37,    38,    81,   112,   113,   105,
-     106,   110,    39,    40,    11,    27,    96,    98,     0,     0,
-      42,    43,    44,    45,     0,     0,    97
+      71,    71,    78,    93,    69,    72,    73,    88,    74,    97,
+      24,    33,    28,    12,     7,    10,     8,    29,    64,     7,
+      35,     8,     1,    14,     2,    18,     3,    15,   103,    42,
+      87,    21,    89,    71,    75,   113,    43,    44,    76,    71,
+      96,    71,    71,    71,    71,    47,    48,    49,    84,   101,
+      25,   109,    85,   111,    79,    80,    20,    81,    16,    17,
+      79,    80,    26,   116,   117,    71,    37,   110,    38,    39,
+      31,    42,     1,    30,     2,    32,     3,    40,    43,    44,
+      36,    65,    41,    42,    66,    67,    46,    47,    48,    49,
+      43,    44,    68,    32,    45,    70,    82,    83,    46,    47,
+      48,    49,    37,    86,    38,    39,    91,    90,     1,    92,
+       2,   107,     3,    40,   102,   104,   105,   106,    41,    42,
+      84,   114,   108,   115,    11,   112,    43,    44,    99,    32,
+      77,    98,     0,     0,    46,    47,    48,    49,    37,   100,
+      38,    39,     0,     0,     1,     0,     2,     0,     3,    40,
+       0,     0,     0,     0,    41,    42,     0,     0,     0,     0,
+       0,     0,    43,    44,     0,    32,     0,     0,     0,     0,
+      46,    47,    48,    49
 };
 
 static const yytype_int8 yycheck[] =
 {
-      38,    39,    49,    72,    36,    38,    39,    64,    40,    78,
-      20,    19,     0,    22,    29,    38,     0,    27,    28,    34,
-      29,     5,    30,    34,    35,    35,    36,    37,    38,    86,
-       0,    63,    29,    65,    72,     5,   105,    22,    23,    38,
-      78,    73,    80,    81,    82,    83,     3,    28,     5,     6,
-      83,    32,     9,   100,    11,   102,    13,    14,    22,    23,
-      28,    25,    19,    20,    32,   112,   113,   105,    20,   101,
-      27,    28,    24,    30,    31,    36,    30,    33,    35,    36,
-      37,    38,     3,    32,     5,     6,    36,    20,     9,    33,
-      11,    38,    13,    14,    27,    28,    28,    28,    19,    20,
-      28,    28,    21,    36,    37,    38,    27,    28,    26,    30,
-      31,    35,    38,    35,    35,    36,    37,    38,     3,    29,
-       5,     6,    38,     9,     9,    11,    11,    13,    13,    14,
-      29,    29,    29,    29,    19,    20,    20,     4,    29,    34,
-      33,    35,    27,    28,     5,    30,    80,    82,    -1,    -1,
-      35,    36,    37,    38,    -1,    -1,    81
+      42,    43,    53,    75,    40,    42,    43,    67,    44,    81,
+      19,    27,    29,    38,     0,     0,     0,    34,    34,     5,
+      29,     5,     9,    28,    11,    29,    13,    32,    88,    20,
+      66,    38,    68,    75,    28,   107,    27,    28,    32,    81,
+      76,    83,    84,    85,    86,    36,    37,    38,    20,    86,
+      33,   102,    24,   104,    22,    23,    36,    25,    34,    35,
+      22,    23,    32,   114,   115,   107,     3,   103,     5,     6,
+      36,    20,     9,    38,    11,    30,    13,    14,    27,    28,
+      33,    38,    19,    20,    28,    28,    35,    36,    37,    38,
+      27,    28,    28,    30,    31,    28,    35,    26,    35,    36,
+      37,    38,     3,    21,     5,     6,    38,    35,     9,    29,
+      11,    34,    13,    14,    29,    29,    29,    29,    19,    20,
+      20,     4,    33,    29,     5,    35,    27,    28,    84,    30,
+      31,    83,    -1,    -1,    35,    36,    37,    38,     3,    85,
+       5,     6,    -1,    -1,     9,    -1,    11,    -1,    13,    14,
+      -1,    -1,    -1,    -1,    19,    20,    -1,    -1,    -1,    -1,
+      -1,    -1,    27,    28,    -1,    30,    -1,    -1,    -1,    -1,
+      35,    36,    37,    38
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,     9,    11,    13,    41,    42,    43,    44,    49,    50,
-       0,    43,    38,    51,    28,    32,    34,    35,    29,    45,
-      36,    38,    46,    47,    50,    33,    32,    30,    48,    29,
-      34,    38,    36,     3,     5,     6,    14,    19,    20,    27,
-      28,    31,    35,    36,    37,    38,    44,    48,    49,    52,
-      53,    54,    55,    56,    57,    58,    59,    60,    61,    62,
-      48,    50,    33,    28,    28,    28,    56,    28,    55,    61,
-      61,    56,    28,    32,    31,    53,    22,    23,    25,    35,
-      26,    20,    24,    21,    38,    56,    54,    56,    35,    38,
-      29,    57,    63,    64,    56,    57,    58,    60,    59,    61,
-      29,    54,    29,    29,    29,    34,    33,    53,    56,    53,
-      35,    57,     4,    29,    53,    53
+       0,     9,    11,    13,    41,    42,    43,    44,    51,    52,
+       0,    43,    38,    53,    28,    32,    34,    35,    29,    45,
+      36,    38,    47,    49,    52,    33,    32,    48,    29,    34,
+      38,    36,    30,    50,    46,    52,    33,     3,     5,     6,
+      14,    19,    20,    27,    28,    31,    35,    36,    37,    38,
+      44,    50,    51,    54,    55,    56,    57,    58,    59,    60,
+      61,    62,    63,    64,    50,    38,    28,    28,    28,    58,
+      28,    57,    63,    63,    58,    28,    32,    31,    55,    22,
+      23,    25,    35,    26,    20,    24,    21,    58,    56,    58,
+      35,    38,    29,    59,    65,    66,    58,    59,    60,    62,
+      61,    63,    29,    56,    29,    29,    29,    34,    33,    55,
+      58,    55,    35,    59,     4,    29,    55,    55
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    40,    41,    42,    42,    43,    43,    45,    44,    46,
-      44,    47,    47,    47,    47,    48,    48,    49,    50,    50,
-      50,    51,    51,    51,    51,    52,    52,    53,    53,    53,
-      53,    53,    53,    53,    53,    53,    53,    54,    54,    55,
-      55,    56,    56,    57,    57,    58,    58,    59,    59,    60,
-      60,    61,    61,    61,    62,    62,    62,    62,    62,    62,
-      62,    63,    63,    64,    64
+       0,    40,    41,    42,    42,    43,    43,    45,    46,    44,
+      47,    48,    44,    49,    49,    49,    49,    50,    50,    51,
+      52,    52,    52,    53,    53,    53,    53,    54,    54,    55,
+      55,    55,    55,    55,    55,    55,    55,    55,    55,    56,
+      56,    57,    57,    58,    58,    59,    59,    60,    60,    61,
+      61,    62,    62,    63,    63,    63,    64,    64,    64,    64,
+      64,    64,    64,    65,    65,    66,    66
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
-       0,     2,     1,     2,     1,     1,     1,     0,     7,     0,
-       6,     4,     3,     2,     1,     3,     2,     3,     1,     1,
-       1,     3,     6,     1,     4,     1,     2,     1,     1,     1,
-       1,     7,     5,     7,     5,     5,     3,     1,     2,     1,
-       4,     1,     3,     1,     3,     1,     3,     1,     3,     1,
-       3,     2,     2,     1,     1,     4,     3,     1,     1,     2,
-       2,     1,     0,     3,     1
+       0,     2,     1,     2,     1,     1,     1,     0,     0,     8,
+       0,     0,     7,     4,     3,     2,     1,     3,     2,     3,
+       1,     1,     1,     3,     6,     1,     4,     1,     2,     1,
+       1,     1,     1,     7,     5,     7,     5,     5,     3,     1,
+       2,     1,     4,     1,     3,     1,     3,     1,     3,     1,
+       3,     1,     3,     2,     2,     1,     1,     4,     3,     1,
+       1,     2,     2,     1,     0,     3,     1
 };
 
 
@@ -1380,7 +1385,7 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* start: program  */
-#line 70 "syntax_analyzer.y"
+#line 69 "22101892.y"
         {
 		outlog<<"At line no: "<<lines<<" start : program "<<endl<<endl;
 		outlog<<"Symbol Table"<<endl<<endl;
@@ -1388,104 +1393,115 @@ yyreduce:
 		// Print your whole symbol table here
 		sym_table->print_all_scopes(outlog);
 	}
-#line 1392 "y.tab.c"
+#line 1397 "y.tab.c"
     break;
 
   case 3: /* program: program unit  */
-#line 80 "syntax_analyzer.y"
+#line 79 "22101892.y"
         {
 		outlog<<"At line no: "<<lines<<" program : program unit "<<endl<<endl;
 		outlog<<yyvsp[-1]->get_name()+"\n"+yyvsp[0]->get_name()<<endl<<endl;
 		
 		yyval = new symbol_info(yyvsp[-1]->get_name()+"\n"+yyvsp[0]->get_name(),"program", symbol_type::VARIABLE);
 	}
-#line 1403 "y.tab.c"
+#line 1408 "y.tab.c"
     break;
 
   case 4: /* program: unit  */
-#line 87 "syntax_analyzer.y"
+#line 86 "22101892.y"
         {
 		outlog<<"At line no: "<<lines<<" program : unit "<<endl<<endl;
 		outlog<<yyvsp[0]->get_name()<<endl<<endl;
 		
 		yyval = new symbol_info(yyvsp[0]->get_name(),"program", symbol_type::VARIABLE);
 	}
-#line 1414 "y.tab.c"
+#line 1419 "y.tab.c"
     break;
 
   case 5: /* unit: var_declaration  */
-#line 96 "syntax_analyzer.y"
+#line 95 "22101892.y"
          {
 		outlog<<"At line no: "<<lines<<" unit : var_declaration "<<endl<<endl;
 		outlog<<yyvsp[0]->get_name()<<endl<<endl;
 		
 		yyval = new symbol_info(yyvsp[0]->get_name(),"unit", symbol_type::VARIABLE);
 	 }
-#line 1425 "y.tab.c"
+#line 1430 "y.tab.c"
     break;
 
   case 6: /* unit: func_definition  */
-#line 103 "syntax_analyzer.y"
+#line 102 "22101892.y"
      {
 		outlog<<"At line no: "<<lines<<" unit : func_definition "<<endl<<endl;
 		outlog<<yyvsp[0]->get_name()<<endl<<endl;
 		
 		yyval = new symbol_info(yyvsp[0]->get_name(),"unit", symbol_type::VARIABLE);
 	 }
-#line 1436 "y.tab.c"
+#line 1441 "y.tab.c"
     break;
 
   case 7: /* $@1: %empty  */
-#line 111 "syntax_analyzer.y"
+#line 110 "22101892.y"
                                            {enterFn(yyvsp[-1]->get_name(), yyvsp[-2]->get_name());}
-#line 1442 "y.tab.c"
+#line 1447 "y.tab.c"
     break;
 
-  case 8: /* func_definition: type_specifier ID LPAREN $@1 parameter_list RPAREN compound_statement  */
-#line 112 "syntax_analyzer.y"
+  case 8: /* $@2: %empty  */
+#line 110 "22101892.y"
+                                                                                                            {outlog << "New ScopeTable with ID " << sym_table->get_current_scope()->get_unique_id() << " created" << endl << endl;}
+#line 1453 "y.tab.c"
+    break;
+
+  case 9: /* func_definition: type_specifier ID LPAREN $@1 parameter_list RPAREN $@2 compound_statement  */
+#line 111 "22101892.y"
                 {	
-			outlog<<"At line no: "<<lines<<" func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement "<<endl<<endl;
-			outlog<<yyvsp[-6]->get_name()<<" "<<yyvsp[-5]->get_name()<<"("+yyvsp[-2]->get_name()+")\n"<<yyvsp[0]->get_name()<<endl<<endl;
+			exitScopeDecl();
+			fn_name.pop();
 			
-			yyval = new symbol_info(yyvsp[-6]->get_name()+" "+yyvsp[-5]->get_name()+"("+yyvsp[-2]->get_name()+")\n"+yyvsp[0]->get_name(),"func_def", symbol_type::VARIABLE);	
+			outlog<<"At line no: "<<lines<<" func_definition : type_specifier ID LPAREN parameter_list RPAREN compound_statement "<<endl<<endl;
+			outlog<<yyvsp[-7]->get_name()<<" "<<yyvsp[-6]->get_name()<<"("+yyvsp[-3]->get_name()+")\n"<<yyvsp[0]->get_name()<<endl<<endl;
+			
+			yyval = new symbol_info(yyvsp[-7]->get_name()+" "+yyvsp[-6]->get_name()+"("+yyvsp[-3]->get_name()+")\n"+yyvsp[0]->get_name(),"func_def", symbol_type::VARIABLE);	
 			
 			// The function definition is complete.
             // You can now insert necessary information about the function into the symbol table
             // However, note that the scope of the function and the scope of the compound statement are different.
-			sym_table->insert(fn_name.top());
+		}
+#line 1471 "y.tab.c"
+    break;
+
+  case 10: /* $@3: %empty  */
+#line 124 "22101892.y"
+                                                  {enterFn(yyvsp[-2]->get_name(), yyvsp[-3]->get_name());}
+#line 1477 "y.tab.c"
+    break;
+
+  case 11: /* $@4: %empty  */
+#line 124 "22101892.y"
+                                                                                             {outlog << "New ScopeTable with ID " << sym_table->get_current_scope()->get_unique_id() << " created" << endl << endl;}
+#line 1483 "y.tab.c"
+    break;
+
+  case 12: /* func_definition: type_specifier ID LPAREN RPAREN $@3 $@4 compound_statement  */
+#line 125 "22101892.y"
+                {
 			exitScopeDecl();
 			fn_name.pop();
-		}
-#line 1460 "y.tab.c"
-    break;
-
-  case 9: /* $@2: %empty  */
-#line 125 "syntax_analyzer.y"
-                                                  {enterFn(yyvsp[-2]->get_name(), yyvsp[-3]->get_name());}
-#line 1466 "y.tab.c"
-    break;
-
-  case 10: /* func_definition: type_specifier ID LPAREN RPAREN $@2 compound_statement  */
-#line 126 "syntax_analyzer.y"
-                {
 			
 			outlog<<"At line no: "<<lines<<" func_definition : type_specifier ID LPAREN RPAREN compound_statement "<<endl<<endl;
-			outlog<<yyvsp[-5]->get_name()<<" "<<yyvsp[-4]->get_name()<<"()\n"<<yyvsp[0]->get_name()<<endl<<endl;
+			outlog<<yyvsp[-6]->get_name()<<" "<<yyvsp[-5]->get_name()<<"()\n"<<yyvsp[0]->get_name()<<endl<<endl;
 			
-			yyval = new symbol_info(yyvsp[-5]->get_name()+" "+yyvsp[-4]->get_name()+"()\n"+yyvsp[0]->get_name(),"func_def", symbol_type::VARIABLE);	
+			yyval = new symbol_info(yyvsp[-6]->get_name()+" "+yyvsp[-5]->get_name()+"()\n"+yyvsp[0]->get_name(),"func_def", symbol_type::VARIABLE);	
 			
 			// The function definition is complete.
             // You can now insert necessary information about the function into the symbol table
             // However, note that the scope of the function and the scope of the compound statement are different.
-			sym_table->insert(fn_name.top());
-			exitScopeDecl();
-			fn_name.pop();
 		}
-#line 1485 "y.tab.c"
+#line 1501 "y.tab.c"
     break;
 
-  case 11: /* parameter_list: parameter_list COMMA type_specifier ID  */
-#line 143 "syntax_analyzer.y"
+  case 13: /* parameter_list: parameter_list COMMA type_specifier ID  */
+#line 141 "22101892.y"
                 {
 			outlog<<"At line no: "<<lines<<" parameter_list : parameter_list COMMA type_specifier ID "<<endl<<endl;
 			outlog<<yyvsp[-3]->get_name()<<","<<yyvsp[-1]->get_name()<<" "<<yyvsp[0]->get_name()<<endl<<endl;
@@ -1497,11 +1513,11 @@ yyreduce:
 			fn_name.top()->add_parameter(addSymbol(yyvsp[0]->get_name(), yyvsp[-1]->get_name(), symbol_type::VARIABLE));
 			sym_table->insert(addSymbol(yyvsp[0]->get_name(), yyvsp[-1]->get_name(), symbol_type::VARIABLE));
 		}
-#line 1501 "y.tab.c"
+#line 1517 "y.tab.c"
     break;
 
-  case 12: /* parameter_list: parameter_list COMMA type_specifier  */
-#line 155 "syntax_analyzer.y"
+  case 14: /* parameter_list: parameter_list COMMA type_specifier  */
+#line 153 "22101892.y"
                 {
 			outlog<<"At line no: "<<lines<<" parameter_list : parameter_list COMMA type_specifier "<<endl<<endl;
 			outlog<<yyvsp[-2]->get_name()<<","<<yyvsp[0]->get_name()<<endl<<endl;
@@ -1512,11 +1528,11 @@ yyreduce:
             // They will be needed when you want to enter the function into the symbol table
 			fn_name.top()->add_parameter(addSymbol("", yyvsp[0]->get_name(), symbol_type::VARIABLE));
 		}
-#line 1516 "y.tab.c"
+#line 1532 "y.tab.c"
     break;
 
-  case 13: /* parameter_list: type_specifier ID  */
-#line 166 "syntax_analyzer.y"
+  case 15: /* parameter_list: type_specifier ID  */
+#line 164 "22101892.y"
                 {
 			outlog<<"At line no: "<<lines<<" parameter_list : type_specifier ID "<<endl<<endl;
 			outlog<<yyvsp[-1]->get_name()<<" "<<yyvsp[0]->get_name()<<endl<<endl;
@@ -1528,11 +1544,11 @@ yyreduce:
 			fn_name.top()->add_parameter(addSymbol(yyvsp[0]->get_name(), yyvsp[-1]->get_name(), symbol_type::VARIABLE));
 			sym_table->insert(addSymbol(yyvsp[0]->get_name(), yyvsp[-1]->get_name(), symbol_type::VARIABLE));
 		}
-#line 1532 "y.tab.c"
+#line 1548 "y.tab.c"
     break;
 
-  case 14: /* parameter_list: type_specifier  */
-#line 178 "syntax_analyzer.y"
+  case 16: /* parameter_list: type_specifier  */
+#line 176 "22101892.y"
                 {
 			outlog<<"At line no: "<<lines<<" parameter_list : type_specifier "<<endl<<endl;
 			outlog<<yyvsp[0]->get_name()<<endl<<endl;
@@ -1543,11 +1559,11 @@ yyreduce:
             // They will be needed when you want to enter the function into the symbol table
 			fn_name.top()->add_parameter(addSymbol("", yyvsp[0]->get_name(), symbol_type::VARIABLE));
 		}
-#line 1547 "y.tab.c"
+#line 1563 "y.tab.c"
     break;
 
-  case 15: /* compound_statement: LCURL statements RCURL  */
-#line 191 "syntax_analyzer.y"
+  case 17: /* compound_statement: LCURL statements RCURL  */
+#line 189 "22101892.y"
                         { 
  		    	outlog<<"At line no: "<<lines<<" compound_statement : LCURL statements RCURL "<<endl<<endl;
 				outlog<<"{\n"+yyvsp[-1]->get_name()+"\n}"<<endl<<endl;
@@ -1558,11 +1574,11 @@ yyreduce:
                 // Print the symbol table here and exit the scope
                 // Note that function parameters should be in the current scope
  		    }
-#line 1562 "y.tab.c"
+#line 1578 "y.tab.c"
     break;
 
-  case 16: /* compound_statement: LCURL RCURL  */
-#line 202 "syntax_analyzer.y"
+  case 18: /* compound_statement: LCURL RCURL  */
+#line 200 "22101892.y"
                     { 
  		    	outlog<<"At line no: "<<lines<<" compound_statement : LCURL RCURL "<<endl<<endl;
 				outlog<<"{\n}"<<endl<<endl;
@@ -1572,11 +1588,11 @@ yyreduce:
 				// The compound statement is complete.
                 // Print the symbol table here and exit the scope
  		    }
-#line 1576 "y.tab.c"
+#line 1592 "y.tab.c"
     break;
 
-  case 17: /* var_declaration: type_specifier declaration_list SEMICOLON  */
-#line 214 "syntax_analyzer.y"
+  case 19: /* var_declaration: type_specifier declaration_list SEMICOLON  */
+#line 212 "22101892.y"
                  {
 			outlog<<"At line no: "<<lines<<" var_declaration : type_specifier declaration_list SEMICOLON "<<endl<<endl;
 			outlog<<yyvsp[-2]->get_name()<<" "<<yyvsp[-1]->get_name()<<";"<<endl<<endl;
@@ -1585,11 +1601,11 @@ yyreduce:
 			
 			// Insert necessary information about the variables in the symbol table
 		 }
-#line 1589 "y.tab.c"
+#line 1605 "y.tab.c"
     break;
 
-  case 18: /* type_specifier: INT  */
-#line 225 "syntax_analyzer.y"
+  case 20: /* type_specifier: INT  */
+#line 223 "22101892.y"
                 {
 			outlog<<"At line no: "<<lines<<" type_specifier : INT "<<endl<<endl;
 			outlog<<"int"<<endl<<endl;
@@ -1597,11 +1613,11 @@ yyreduce:
 			yyval = new symbol_info("int","type", symbol_type::VARIABLE);
 			current_var_type = "int";
 	    }
-#line 1601 "y.tab.c"
+#line 1617 "y.tab.c"
     break;
 
-  case 19: /* type_specifier: FLOAT  */
-#line 233 "syntax_analyzer.y"
+  case 21: /* type_specifier: FLOAT  */
+#line 231 "22101892.y"
                 {
 			outlog<<"At line no: "<<lines<<" type_specifier : FLOAT "<<endl<<endl;
 			outlog<<"float"<<endl<<endl;
@@ -1609,11 +1625,11 @@ yyreduce:
 			yyval = new symbol_info("float","type", symbol_type::VARIABLE);
 			current_var_type = "float";
 	    }
-#line 1613 "y.tab.c"
+#line 1629 "y.tab.c"
     break;
 
-  case 20: /* type_specifier: VOID  */
-#line 241 "syntax_analyzer.y"
+  case 22: /* type_specifier: VOID  */
+#line 239 "22101892.y"
                 {
 			outlog<<"At line no: "<<lines<<" type_specifier : VOID "<<endl<<endl;
 			outlog<<"void"<<endl<<endl;
@@ -1621,11 +1637,11 @@ yyreduce:
 			yyval = new symbol_info("void","type", symbol_type::VARIABLE);
 			current_var_type = "void";
 	    }
-#line 1625 "y.tab.c"
+#line 1641 "y.tab.c"
     break;
 
-  case 21: /* declaration_list: declaration_list COMMA ID  */
-#line 251 "syntax_analyzer.y"
+  case 23: /* declaration_list: declaration_list COMMA ID  */
+#line 249 "22101892.y"
                   {
  		  	outlog<<"At line no: "<<lines<<" declaration_list : declaration_list COMMA ID "<<endl<<endl;
  		  	outlog<<yyvsp[-2]->get_name()+","<<yyvsp[0]->get_name()<<endl<<endl;
@@ -1636,11 +1652,11 @@ yyreduce:
 			sym_table->insert(addSymbol(yyvsp[0]->get_name(),current_var_type,symbol_type::VARIABLE));
 			
  		  }
-#line 1640 "y.tab.c"
+#line 1656 "y.tab.c"
     break;
 
-  case 22: /* declaration_list: declaration_list COMMA ID LTHIRD CONST_INT RTHIRD  */
-#line 262 "syntax_analyzer.y"
+  case 24: /* declaration_list: declaration_list COMMA ID LTHIRD CONST_INT RTHIRD  */
+#line 260 "22101892.y"
                   {
  		  	outlog<<"At line no: "<<lines<<" declaration_list : declaration_list COMMA ID LTHIRD CONST_INT RTHIRD "<<endl<<endl;
  		  	outlog<<yyvsp[-5]->get_name()+","<<yyvsp[-3]->get_name()<<"["<<yyvsp[-1]->get_name()<<"]"<<endl<<endl;
@@ -1649,11 +1665,11 @@ yyreduce:
 			sym_table->insert(addSymbol(yyvsp[-3]->get_name(),current_var_type,symbol_type::ARRAY,stoi(yyvsp[-1]->get_name())));
 			yyval = new symbol_info(yyvsp[-5]->get_name()+","+yyvsp[-3]->get_name()+"["+ yyvsp[-1]->get_name()+"]","decl_list", symbol_type::VARIABLE);
  		  }
-#line 1653 "y.tab.c"
+#line 1669 "y.tab.c"
     break;
 
-  case 23: /* declaration_list: ID  */
-#line 271 "syntax_analyzer.y"
+  case 25: /* declaration_list: ID  */
+#line 269 "22101892.y"
                   {
  		  	outlog<<"At line no: "<<lines<<" declaration_list : ID "<<endl<<endl;
 			outlog<<yyvsp[0]->get_name()<<endl<<endl;
@@ -1662,11 +1678,11 @@ yyreduce:
 			sym_table->insert(addSymbol(yyvsp[0]->get_name(),current_var_type,symbol_type::VARIABLE));
 			yyval = new symbol_info(yyvsp[0]->get_name(),"decl_list", symbol_type::VARIABLE);
  		  }
-#line 1666 "y.tab.c"
+#line 1682 "y.tab.c"
     break;
 
-  case 24: /* declaration_list: ID LTHIRD CONST_INT RTHIRD  */
-#line 280 "syntax_analyzer.y"
+  case 26: /* declaration_list: ID LTHIRD CONST_INT RTHIRD  */
+#line 278 "22101892.y"
                   {
  		  	outlog<<"At line no: "<<lines<<" declaration_list : ID LTHIRD CONST_INT RTHIRD "<<endl<<endl;
 			outlog<<yyvsp[-3]->get_name()<<"["<<yyvsp[-1]->get_name()<<"]"<<endl<<endl;
@@ -1675,44 +1691,44 @@ yyreduce:
             sym_table->insert(addSymbol(yyvsp[-3]->get_name(),current_var_type,symbol_type::ARRAY,stoi(yyvsp[-1]->get_name())));
 			yyval = new symbol_info(yyvsp[-3]->get_name()+"["+yyvsp[-1]->get_name()+"]","decl_list", symbol_type::VARIABLE);
  		  }
-#line 1679 "y.tab.c"
+#line 1695 "y.tab.c"
     break;
 
-  case 25: /* statements: statement  */
-#line 292 "syntax_analyzer.y"
+  case 27: /* statements: statement  */
+#line 290 "22101892.y"
            {
 	    	outlog<<"At line no: "<<lines<<" statements : statement "<<endl<<endl;
 			outlog<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[0]->get_name(),"stmnts", symbol_type::VARIABLE);
 	   }
-#line 1690 "y.tab.c"
+#line 1706 "y.tab.c"
     break;
 
-  case 26: /* statements: statements statement  */
-#line 299 "syntax_analyzer.y"
+  case 28: /* statements: statements statement  */
+#line 297 "22101892.y"
            {
 	    	outlog<<"At line no: "<<lines<<" statements : statements statement "<<endl<<endl;
 			outlog<<yyvsp[-1]->get_name()<<"\n"<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[-1]->get_name()+"\n"+yyvsp[0]->get_name(),"stmnts", symbol_type::VARIABLE);
 	   }
-#line 1701 "y.tab.c"
+#line 1717 "y.tab.c"
     break;
 
-  case 27: /* statement: var_declaration  */
-#line 308 "syntax_analyzer.y"
+  case 29: /* statement: var_declaration  */
+#line 306 "22101892.y"
           {
 	    	outlog<<"At line no: "<<lines<<" statement : var_declaration "<<endl<<endl;
 			outlog<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[0]->get_name(),"stmnt", symbol_type::VARIABLE);
 	  }
-#line 1712 "y.tab.c"
+#line 1728 "y.tab.c"
     break;
 
-  case 28: /* statement: func_definition  */
-#line 315 "syntax_analyzer.y"
+  case 30: /* statement: func_definition  */
+#line 313 "22101892.y"
           {
 	  		outlog<<"At line no: "<<lines<<" statement : func_definition "<<endl<<endl;
             outlog<<yyvsp[0]->get_name()<<endl<<endl;
@@ -1720,121 +1736,121 @@ yyreduce:
             yyval = new symbol_info(yyvsp[0]->get_name(),"stmnt", symbol_type::VARIABLE);
 	  		
 	  }
-#line 1724 "y.tab.c"
+#line 1740 "y.tab.c"
     break;
 
-  case 29: /* statement: expression_statement  */
-#line 323 "syntax_analyzer.y"
+  case 31: /* statement: expression_statement  */
+#line 321 "22101892.y"
           {
 	    	outlog<<"At line no: "<<lines<<" statement : expression_statement "<<endl<<endl;
 			outlog<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[0]->get_name(),"stmnt", symbol_type::VARIABLE);
 	  }
-#line 1735 "y.tab.c"
+#line 1751 "y.tab.c"
     break;
 
-  case 30: /* statement: compound_statement  */
-#line 330 "syntax_analyzer.y"
+  case 32: /* statement: compound_statement  */
+#line 328 "22101892.y"
           {
 	    	outlog<<"At line no: "<<lines<<" statement : compound_statement "<<endl<<endl;
 			outlog<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[0]->get_name(),"stmnt", symbol_type::VARIABLE);
 	  }
-#line 1746 "y.tab.c"
+#line 1762 "y.tab.c"
     break;
 
-  case 31: /* statement: FOR LPAREN expression_statement expression_statement expression RPAREN statement  */
-#line 337 "syntax_analyzer.y"
+  case 33: /* statement: FOR LPAREN expression_statement expression_statement expression RPAREN statement  */
+#line 335 "22101892.y"
           {
 	    	outlog<<"At line no: "<<lines<<" statement : FOR LPAREN expression_statement expression_statement expression RPAREN statement "<<endl<<endl;
 			outlog<<"for("<<yyvsp[-4]->get_name()<<yyvsp[-3]->get_name()<<yyvsp[-2]->get_name()<<")\n"<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info("for("+yyvsp[-4]->get_name()+yyvsp[-3]->get_name()+yyvsp[-2]->get_name()+")\n"+yyvsp[0]->get_name(),"stmnt", symbol_type::VARIABLE);
 	  }
-#line 1757 "y.tab.c"
+#line 1773 "y.tab.c"
     break;
 
-  case 32: /* statement: IF LPAREN expression RPAREN statement  */
-#line 344 "syntax_analyzer.y"
+  case 34: /* statement: IF LPAREN expression RPAREN statement  */
+#line 342 "22101892.y"
           {
 	    	outlog<<"At line no: "<<lines<<" statement : IF LPAREN expression RPAREN statement "<<endl<<endl;
 			outlog<<"if("<<yyvsp[-2]->get_name()<<")\n"<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info("if("+yyvsp[-2]->get_name()+")\n"+yyvsp[0]->get_name(),"stmnt", symbol_type::VARIABLE);
 	  }
-#line 1768 "y.tab.c"
+#line 1784 "y.tab.c"
     break;
 
-  case 33: /* statement: IF LPAREN expression RPAREN statement ELSE statement  */
-#line 351 "syntax_analyzer.y"
+  case 35: /* statement: IF LPAREN expression RPAREN statement ELSE statement  */
+#line 349 "22101892.y"
           {
 	    	outlog<<"At line no: "<<lines<<" statement : IF LPAREN expression RPAREN statement ELSE statement "<<endl<<endl;
 			outlog<<"if("<<yyvsp[-4]->get_name()<<")\n"<<yyvsp[-2]->get_name()<<"\nelse\n"<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info("if("+yyvsp[-4]->get_name()+")\n"+yyvsp[-2]->get_name()+"\nelse\n"+yyvsp[0]->get_name(),"stmnt", symbol_type::VARIABLE);
 	  }
-#line 1779 "y.tab.c"
+#line 1795 "y.tab.c"
     break;
 
-  case 34: /* statement: WHILE LPAREN expression RPAREN statement  */
-#line 358 "syntax_analyzer.y"
+  case 36: /* statement: WHILE LPAREN expression RPAREN statement  */
+#line 356 "22101892.y"
           {
 	    	outlog<<"At line no: "<<lines<<" statement : WHILE LPAREN expression RPAREN statement "<<endl<<endl;
 			outlog<<"while("<<yyvsp[-2]->get_name()<<")\n"<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info("while("+yyvsp[-2]->get_name()+")\n"+yyvsp[0]->get_name(),"stmnt", symbol_type::VARIABLE);
 	  }
-#line 1790 "y.tab.c"
+#line 1806 "y.tab.c"
     break;
 
-  case 35: /* statement: PRINTLN LPAREN ID RPAREN SEMICOLON  */
-#line 365 "syntax_analyzer.y"
+  case 37: /* statement: PRINTLN LPAREN ID RPAREN SEMICOLON  */
+#line 363 "22101892.y"
           {
 	    	outlog<<"At line no: "<<lines<<" statement : PRINTLN LPAREN ID RPAREN SEMICOLON "<<endl<<endl;
 			outlog<<"printf("<<yyvsp[-2]->get_name()<<");"<<endl<<endl; 
 			
 			yyval = new symbol_info("printf("+yyvsp[-2]->get_name()+");","stmnt", symbol_type::VARIABLE);
 	  }
-#line 1801 "y.tab.c"
+#line 1817 "y.tab.c"
     break;
 
-  case 36: /* statement: RETURN expression SEMICOLON  */
-#line 372 "syntax_analyzer.y"
+  case 38: /* statement: RETURN expression SEMICOLON  */
+#line 370 "22101892.y"
           {
 	    	outlog<<"At line no: "<<lines<<" statement : RETURN expression SEMICOLON "<<endl<<endl;
 			outlog<<"return "<<yyvsp[-1]->get_name()<<";"<<endl<<endl;
 			
 			yyval = new symbol_info("return "+yyvsp[-1]->get_name()+";","stmnt", symbol_type::VARIABLE);
 	  }
-#line 1812 "y.tab.c"
+#line 1828 "y.tab.c"
     break;
 
-  case 37: /* expression_statement: SEMICOLON  */
-#line 381 "syntax_analyzer.y"
+  case 39: /* expression_statement: SEMICOLON  */
+#line 379 "22101892.y"
                         {
 				outlog<<"At line no: "<<lines<<" expression_statement : SEMICOLON "<<endl<<endl;
 				outlog<<";"<<endl<<endl;
 				
 				yyval = new symbol_info(";","expr_stmt", symbol_type::VARIABLE);
 	        }
-#line 1823 "y.tab.c"
+#line 1839 "y.tab.c"
     break;
 
-  case 38: /* expression_statement: expression SEMICOLON  */
-#line 388 "syntax_analyzer.y"
+  case 40: /* expression_statement: expression SEMICOLON  */
+#line 386 "22101892.y"
                         {
 				outlog<<"At line no: "<<lines<<" expression_statement : expression SEMICOLON "<<endl<<endl;
 				outlog<<yyvsp[-1]->get_name()<<";"<<endl<<endl;
 				
 				yyval = new symbol_info(yyvsp[-1]->get_name()+";","expr_stmt", symbol_type::VARIABLE);
 	        }
-#line 1834 "y.tab.c"
+#line 1850 "y.tab.c"
     break;
 
-  case 39: /* variable: ID  */
-#line 397 "syntax_analyzer.y"
+  case 41: /* variable: ID  */
+#line 395 "22101892.y"
       {
 	    outlog<<"At line no: "<<lines<<" variable : ID "<<endl<<endl;
 		outlog<<yyvsp[0]->get_name()<<endl<<endl;
@@ -1842,88 +1858,88 @@ yyreduce:
 		yyval = new symbol_info(yyvsp[0]->get_name(),"varbl", symbol_type::VARIABLE);
 		
 	 }
-#line 1846 "y.tab.c"
+#line 1862 "y.tab.c"
     break;
 
-  case 40: /* variable: ID LTHIRD expression RTHIRD  */
-#line 405 "syntax_analyzer.y"
+  case 42: /* variable: ID LTHIRD expression RTHIRD  */
+#line 403 "22101892.y"
          {
 	 	outlog<<"At line no: "<<lines<<" variable : ID LTHIRD expression RTHIRD "<<endl<<endl;
 		outlog<<yyvsp[-3]->get_name()<<"["<<yyvsp[-1]->get_name()<<"]"<<endl<<endl;
 		
 		yyval = new symbol_info(yyvsp[-3]->get_name()+"["+yyvsp[-1]->get_name()+"]","varbl", symbol_type::VARIABLE);
 	 }
-#line 1857 "y.tab.c"
+#line 1873 "y.tab.c"
     break;
 
-  case 41: /* expression: logic_expression  */
-#line 414 "syntax_analyzer.y"
+  case 43: /* expression: logic_expression  */
+#line 412 "22101892.y"
            {
 	    	outlog<<"At line no: "<<lines<<" expression : logic_expression "<<endl<<endl;
 			outlog<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[0]->get_name(),"expr", symbol_type::VARIABLE);
 	   }
-#line 1868 "y.tab.c"
+#line 1884 "y.tab.c"
     break;
 
-  case 42: /* expression: variable ASSIGNOP logic_expression  */
-#line 421 "syntax_analyzer.y"
+  case 44: /* expression: variable ASSIGNOP logic_expression  */
+#line 419 "22101892.y"
            {
 	    	outlog<<"At line no: "<<lines<<" expression : variable ASSIGNOP logic_expression "<<endl<<endl;
 			outlog<<yyvsp[-2]->get_name()<<"="<<yyvsp[0]->get_name()<<endl<<endl;
 
 			yyval = new symbol_info(yyvsp[-2]->get_name()+"="+yyvsp[0]->get_name(),"expr", symbol_type::VARIABLE);
 	   }
-#line 1879 "y.tab.c"
+#line 1895 "y.tab.c"
     break;
 
-  case 43: /* logic_expression: rel_expression  */
-#line 430 "syntax_analyzer.y"
+  case 45: /* logic_expression: rel_expression  */
+#line 428 "22101892.y"
              {
 	    	outlog<<"At line no: "<<lines<<" logic_expression : rel_expression "<<endl<<endl;
 			outlog<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[0]->get_name(),"lgc_expr", symbol_type::VARIABLE);
 	     }
-#line 1890 "y.tab.c"
+#line 1906 "y.tab.c"
     break;
 
-  case 44: /* logic_expression: rel_expression LOGICOP rel_expression  */
-#line 437 "syntax_analyzer.y"
+  case 46: /* logic_expression: rel_expression LOGICOP rel_expression  */
+#line 435 "22101892.y"
                  {
 	    	outlog<<"At line no: "<<lines<<" logic_expression : rel_expression LOGICOP rel_expression "<<endl<<endl;
 			outlog<<yyvsp[-2]->get_name()<<yyvsp[-1]->get_name()<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[-2]->get_name()+yyvsp[-1]->get_name()+yyvsp[0]->get_name(),"lgc_expr", symbol_type::VARIABLE);
 	     }
-#line 1901 "y.tab.c"
+#line 1917 "y.tab.c"
     break;
 
-  case 45: /* rel_expression: simple_expression  */
-#line 446 "syntax_analyzer.y"
+  case 47: /* rel_expression: simple_expression  */
+#line 444 "22101892.y"
                 {
 	    	outlog<<"At line no: "<<lines<<" rel_expression : simple_expression "<<endl<<endl;
 			outlog<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[0]->get_name(),"rel_expr", symbol_type::VARIABLE);
 	    }
-#line 1912 "y.tab.c"
+#line 1928 "y.tab.c"
     break;
 
-  case 46: /* rel_expression: simple_expression RELOP simple_expression  */
-#line 453 "syntax_analyzer.y"
+  case 48: /* rel_expression: simple_expression RELOP simple_expression  */
+#line 451 "22101892.y"
                 {
 	    	outlog<<"At line no: "<<lines<<" rel_expression : simple_expression RELOP simple_expression "<<endl<<endl;
 			outlog<<yyvsp[-2]->get_name()<<yyvsp[-1]->get_name()<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[-2]->get_name()+yyvsp[-1]->get_name()+yyvsp[0]->get_name(),"rel_expr", symbol_type::VARIABLE);
 	    }
-#line 1923 "y.tab.c"
+#line 1939 "y.tab.c"
     break;
 
-  case 47: /* simple_expression: term  */
-#line 462 "syntax_analyzer.y"
+  case 49: /* simple_expression: term  */
+#line 460 "22101892.y"
           {
 	    	outlog<<"At line no: "<<lines<<" simple_expression : term "<<endl<<endl;
 			outlog<<yyvsp[0]->get_name()<<endl<<endl;
@@ -1931,22 +1947,22 @@ yyreduce:
 			yyval = new symbol_info(yyvsp[0]->get_name(),"simp_expr", symbol_type::VARIABLE);
 			
 	      }
-#line 1935 "y.tab.c"
+#line 1951 "y.tab.c"
     break;
 
-  case 48: /* simple_expression: simple_expression ADDOP term  */
-#line 470 "syntax_analyzer.y"
+  case 50: /* simple_expression: simple_expression ADDOP term  */
+#line 468 "22101892.y"
                   {
 	    	outlog<<"At line no: "<<lines<<" simple_expression : simple_expression ADDOP term "<<endl<<endl;
 			outlog<<yyvsp[-2]->get_name()<<yyvsp[-1]->get_name()<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[-2]->get_name()+yyvsp[-1]->get_name()+yyvsp[0]->get_name(),"simp_expr", symbol_type::VARIABLE);
 	      }
-#line 1946 "y.tab.c"
+#line 1962 "y.tab.c"
     break;
 
-  case 49: /* term: unary_expression  */
-#line 479 "syntax_analyzer.y"
+  case 51: /* term: unary_expression  */
+#line 477 "22101892.y"
      {
 	    	outlog<<"At line no: "<<lines<<" term : unary_expression "<<endl<<endl;
 			outlog<<yyvsp[0]->get_name()<<endl<<endl;
@@ -1954,11 +1970,11 @@ yyreduce:
 			yyval = new symbol_info(yyvsp[0]->get_name(),"term", symbol_type::VARIABLE);
 			
 	 }
-#line 1958 "y.tab.c"
+#line 1974 "y.tab.c"
     break;
 
-  case 50: /* term: term MULOP unary_expression  */
-#line 487 "syntax_analyzer.y"
+  case 52: /* term: term MULOP unary_expression  */
+#line 485 "22101892.y"
      {
 	    	outlog<<"At line no: "<<lines<<" term : term MULOP unary_expression "<<endl<<endl;
 			outlog<<yyvsp[-2]->get_name()<<yyvsp[-1]->get_name()<<yyvsp[0]->get_name()<<endl<<endl;
@@ -1966,165 +1982,165 @@ yyreduce:
 			yyval = new symbol_info(yyvsp[-2]->get_name()+yyvsp[-1]->get_name()+yyvsp[0]->get_name(),"term", symbol_type::VARIABLE);
 			
 	 }
-#line 1970 "y.tab.c"
+#line 1986 "y.tab.c"
     break;
 
-  case 51: /* unary_expression: ADDOP unary_expression  */
-#line 497 "syntax_analyzer.y"
+  case 53: /* unary_expression: ADDOP unary_expression  */
+#line 495 "22101892.y"
                  {
 	    	outlog<<"At line no: "<<lines<<" unary_expression : ADDOP unary_expression "<<endl<<endl;
 			outlog<<yyvsp[-1]->get_name()<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[-1]->get_name()+yyvsp[0]->get_name(),"un_expr", symbol_type::VARIABLE);
 	     }
-#line 1981 "y.tab.c"
+#line 1997 "y.tab.c"
     break;
 
-  case 52: /* unary_expression: NOT unary_expression  */
-#line 504 "syntax_analyzer.y"
+  case 54: /* unary_expression: NOT unary_expression  */
+#line 502 "22101892.y"
                  {
 	    	outlog<<"At line no: "<<lines<<" unary_expression : NOT unary_expression "<<endl<<endl;
 			outlog<<"!"<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info("!"+yyvsp[0]->get_name(),"un_expr", symbol_type::VARIABLE);
 	     }
-#line 1992 "y.tab.c"
+#line 2008 "y.tab.c"
     break;
 
-  case 53: /* unary_expression: factor  */
-#line 511 "syntax_analyzer.y"
+  case 55: /* unary_expression: factor  */
+#line 509 "22101892.y"
                  {
 	    	outlog<<"At line no: "<<lines<<" unary_expression : factor "<<endl<<endl;
 			outlog<<yyvsp[0]->get_name()<<endl<<endl;
 			
 			yyval = new symbol_info(yyvsp[0]->get_name(),"un_expr", symbol_type::VARIABLE);
 	     }
-#line 2003 "y.tab.c"
+#line 2019 "y.tab.c"
     break;
 
-  case 54: /* factor: variable  */
-#line 520 "syntax_analyzer.y"
+  case 56: /* factor: variable  */
+#line 518 "22101892.y"
     {
 	    outlog<<"At line no: "<<lines<<" factor : variable "<<endl<<endl;
 		outlog<<yyvsp[0]->get_name()<<endl<<endl;
 			
 		yyval = new symbol_info(yyvsp[0]->get_name(),"fctr", symbol_type::VARIABLE);
 	}
-#line 2014 "y.tab.c"
+#line 2030 "y.tab.c"
     break;
 
-  case 55: /* factor: ID LPAREN argument_list RPAREN  */
-#line 527 "syntax_analyzer.y"
+  case 57: /* factor: ID LPAREN argument_list RPAREN  */
+#line 525 "22101892.y"
         {
 	    outlog<<"At line no: "<<lines<<" factor : ID LPAREN argument_list RPAREN "<<endl<<endl;
 		outlog<<yyvsp[-3]->get_name()<<"("<<yyvsp[-1]->get_name()<<")"<<endl<<endl;
 
 		yyval = new symbol_info(yyvsp[-3]->get_name()+"("+yyvsp[-1]->get_name()+")","fctr", symbol_type::VARIABLE);
 	}
-#line 2025 "y.tab.c"
+#line 2041 "y.tab.c"
     break;
 
-  case 56: /* factor: LPAREN expression RPAREN  */
-#line 534 "syntax_analyzer.y"
+  case 58: /* factor: LPAREN expression RPAREN  */
+#line 532 "22101892.y"
         {
 	   	outlog<<"At line no: "<<lines<<" factor : LPAREN expression RPAREN "<<endl<<endl;
 		outlog<<"("<<yyvsp[-1]->get_name()<<")"<<endl<<endl;
 		
 		yyval = new symbol_info("("+yyvsp[-1]->get_name()+")","fctr", symbol_type::VARIABLE);
 	}
-#line 2036 "y.tab.c"
+#line 2052 "y.tab.c"
     break;
 
-  case 57: /* factor: CONST_INT  */
-#line 541 "syntax_analyzer.y"
+  case 59: /* factor: CONST_INT  */
+#line 539 "22101892.y"
         {
 	    outlog<<"At line no: "<<lines<<" factor : CONST_INT "<<endl<<endl;
 		outlog<<yyvsp[0]->get_name()<<endl<<endl;
 			
 		yyval = new symbol_info(yyvsp[0]->get_name(),"fctr", symbol_type::VARIABLE);
 	}
-#line 2047 "y.tab.c"
+#line 2063 "y.tab.c"
     break;
 
-  case 58: /* factor: CONST_FLOAT  */
-#line 548 "syntax_analyzer.y"
+  case 60: /* factor: CONST_FLOAT  */
+#line 546 "22101892.y"
         {
 	    outlog<<"At line no: "<<lines<<" factor : CONST_FLOAT "<<endl<<endl;
 		outlog<<yyvsp[0]->get_name()<<endl<<endl;
 			
 		yyval = new symbol_info(yyvsp[0]->get_name(),"fctr", symbol_type::VARIABLE);
 	}
-#line 2058 "y.tab.c"
+#line 2074 "y.tab.c"
     break;
 
-  case 59: /* factor: variable INCOP  */
-#line 555 "syntax_analyzer.y"
+  case 61: /* factor: variable INCOP  */
+#line 553 "22101892.y"
         {
 	    outlog<<"At line no: "<<lines<<" factor : variable INCOP "<<endl<<endl;
 		outlog<<yyvsp[-1]->get_name()<<"++"<<endl<<endl;
 			
 		yyval = new symbol_info(yyvsp[-1]->get_name()+"++","fctr", symbol_type::VARIABLE);
 	}
-#line 2069 "y.tab.c"
+#line 2085 "y.tab.c"
     break;
 
-  case 60: /* factor: variable DECOP  */
-#line 562 "syntax_analyzer.y"
+  case 62: /* factor: variable DECOP  */
+#line 560 "22101892.y"
         {
 	    outlog<<"At line no: "<<lines<<" factor : variable DECOP "<<endl<<endl;
 		outlog<<yyvsp[-1]->get_name()<<"--"<<endl<<endl;
 			
 		yyval = new symbol_info(yyvsp[-1]->get_name()+"--","fctr", symbol_type::VARIABLE);
 	}
-#line 2080 "y.tab.c"
+#line 2096 "y.tab.c"
     break;
 
-  case 61: /* argument_list: arguments  */
-#line 571 "syntax_analyzer.y"
+  case 63: /* argument_list: arguments  */
+#line 569 "22101892.y"
                           {
 					outlog<<"At line no: "<<lines<<" argument_list : arguments "<<endl<<endl;
 					outlog<<yyvsp[0]->get_name()<<endl<<endl;
 						
 					yyval = new symbol_info(yyvsp[0]->get_name(),"arg_list", symbol_type::VARIABLE);
 			  }
-#line 2091 "y.tab.c"
+#line 2107 "y.tab.c"
     break;
 
-  case 62: /* argument_list: %empty  */
-#line 578 "syntax_analyzer.y"
+  case 64: /* argument_list: %empty  */
+#line 576 "22101892.y"
                           {
 					outlog<<"At line no: "<<lines<<" argument_list :  "<<endl<<endl;
 					outlog<<""<<endl<<endl;
 						
 					yyval = new symbol_info("","arg_list", symbol_type::VARIABLE);
 			  }
-#line 2102 "y.tab.c"
+#line 2118 "y.tab.c"
     break;
 
-  case 63: /* arguments: arguments COMMA logic_expression  */
-#line 587 "syntax_analyzer.y"
+  case 65: /* arguments: arguments COMMA logic_expression  */
+#line 585 "22101892.y"
                   {
 				outlog<<"At line no: "<<lines<<" arguments : arguments COMMA logic_expression "<<endl<<endl;
 				outlog<<yyvsp[-2]->get_name()<<","<<yyvsp[0]->get_name()<<endl<<endl;
 						
 				yyval = new symbol_info(yyvsp[-2]->get_name()+","+yyvsp[0]->get_name(),"arg", symbol_type::VARIABLE);
 		  }
-#line 2113 "y.tab.c"
+#line 2129 "y.tab.c"
     break;
 
-  case 64: /* arguments: logic_expression  */
-#line 594 "syntax_analyzer.y"
+  case 66: /* arguments: logic_expression  */
+#line 592 "22101892.y"
               {
 				outlog<<"At line no: "<<lines<<" arguments : logic_expression "<<endl<<endl;
 				outlog<<yyvsp[0]->get_name()<<endl<<endl;
 						
 				yyval = new symbol_info(yyvsp[0]->get_name(),"arg", symbol_type::VARIABLE);
 		  }
-#line 2124 "y.tab.c"
+#line 2140 "y.tab.c"
     break;
 
 
-#line 2128 "y.tab.c"
+#line 2144 "y.tab.c"
 
       default: break;
     }
@@ -2317,7 +2333,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 603 "syntax_analyzer.y"
+#line 601 "22101892.y"
 
 
 int main(int argc, char *argv[])

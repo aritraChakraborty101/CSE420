@@ -1,12 +1,4 @@
-Error at line 6: Duplicate declaration of a
+Error at line 7: Duplicate declaration of c
 
-Error at line 9: Duplicate declaration of a
-
-Error at line 12: Duplicate declaration of a
-
-Error at line 15: Duplicate declaration of a
-
-Error at line 18: Duplicate declaration of a
-
-Total errors: 5
-Total errors: 5
+Total errors: 1
+Total errors: 1

@@ -563,8 +563,8 @@ statement : var_declaration
 			
 			// Create AST node for for loop
 			ForNode* forNode = new ForNode(
-				(ExprNode*)$3->get_ast_node(),
-				(ExprNode*)$4->get_ast_node(),
+				(StmtNode*)$3->get_ast_node(),
+				(StmtNode*)$4->get_ast_node(),
 				(ExprNode*)$5->get_ast_node(),
 				(StmtNode*)$7->get_ast_node()
 			);
@@ -1219,12 +1219,17 @@ factor	: variable  // factor can be void
 		$$->setvartype($1->getvartype());
 		
 		// Create AST nodes for increment
-		// For x++, equivalent to (x = x + 1)
-		VarNode* varNode = (VarNode*)$1->get_ast_node();
+		// For x++, we need two separate VarNodes (one for LHS, one for RHS)
+		VarNode* originalVar = (VarNode*)$1->get_ast_node();
+		VarNode* lhsVar = new VarNode(originalVar->get_name(), $1->getvartype());
+		VarNode* rhsVar = new VarNode(originalVar->get_name(), $1->getvartype());
 		ConstNode* oneNode = new ConstNode("1", "int");
-		BinaryOpNode* addNode = new BinaryOpNode("+", varNode, oneNode, $1->getvartype());
-		AssignNode* assignNode = new AssignNode(varNode, addNode, $1->getvartype());
+		BinaryOpNode* addNode = new BinaryOpNode("+", rhsVar, oneNode, $1->getvartype());
+		AssignNode* assignNode = new AssignNode(lhsVar, addNode, $1->getvartype());
 		$$->set_ast_node(assignNode);
+		
+		// Clean up the original var node since we created new ones
+		delete originalVar;
 	}
 	| variable DECOP
 	{
@@ -1235,12 +1240,17 @@ factor	: variable  // factor can be void
 		$$->setvartype($1->getvartype());
 		
 		// Create AST nodes for decrement
-		// For x--, equivalent to (x = x - 1)
-		VarNode* varNode = (VarNode*)$1->get_ast_node();
+		// For x--, we need two separate VarNodes (one for LHS, one for RHS)
+		VarNode* originalVar = (VarNode*)$1->get_ast_node();
+		VarNode* lhsVar = new VarNode(originalVar->get_name(), $1->getvartype());
+		VarNode* rhsVar = new VarNode(originalVar->get_name(), $1->getvartype());
 		ConstNode* oneNode = new ConstNode("1", "int");
-		BinaryOpNode* subNode = new BinaryOpNode("-", varNode, oneNode, $1->getvartype());
-		AssignNode* assignNode = new AssignNode(varNode, subNode, $1->getvartype());
+		BinaryOpNode* subNode = new BinaryOpNode("-", rhsVar, oneNode, $1->getvartype());
+		AssignNode* assignNode = new AssignNode(lhsVar, subNode, $1->getvartype());
 		$$->set_ast_node(assignNode);
+		
+		// Clean up the original var node since we created new ones
+		delete originalVar;
 	}
 	;
 	

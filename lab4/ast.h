@@ -42,16 +42,33 @@ public:
     
     string generate_index_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                               int& temp_count, int& label_count) const {
-        // TODO: Implement this method
-        // Should generate code to calculate the array index and return the temp variable
+        if (index) {
+            return index->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        }
         return "";
     }
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for variable access or array access
-        return "";
+        if (has_index()) {
+            // Array access: a[i]
+            string index_temp = index->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+            string result_temp = "t" + to_string(temp_count++);
+            outcode << result_temp << " = " << name << "[" << index_temp << "]" << endl;
+            return result_temp;
+        } else {
+            // Simple variable: check if already loaded
+            if (symbol_to_temp.find(name) != symbol_to_temp.end()) {
+                // Reuse existing temp
+                return symbol_to_temp[name];
+            }
+            
+            // Create new temp and cache it
+            string result_temp = "t" + to_string(temp_count++);
+            outcode << result_temp << " = " << name << endl;
+            symbol_to_temp[name] = result_temp;
+            return result_temp;
+        }
     }
     
     string get_name() const { return name; }
@@ -68,9 +85,10 @@ public:
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for constant values
-        return "";
+        // Load constant into a temporary
+        string temp = "t" + to_string(temp_count++);
+        outcode << temp << " = " << value << endl;
+        return temp;
     }
 };
 
@@ -93,9 +111,11 @@ public:
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for binary operations
-        return "";
+        string left_temp = left->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        string right_temp = right->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        string result_temp = "t" + to_string(temp_count++);
+        outcode << result_temp << " = " << left_temp << " " << op << " " << right_temp << endl;
+        return result_temp;
     }
 };
 
@@ -114,9 +134,18 @@ public:
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for unary operations
-        return "";
+        string expr_temp = expr->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        string result_temp = "t" + to_string(temp_count++);
+        
+        if (op == "-") {
+            outcode << result_temp << " = -" << expr_temp << endl;
+        } else if (op == "!") {
+            outcode << result_temp << " = !" << expr_temp << endl;
+        } else {
+            outcode << result_temp << " = " << op << expr_temp << endl;
+        }
+        
+        return result_temp;
     }
 };
 
@@ -138,9 +167,20 @@ public:
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for assignment operations
-        return "";
+        string rhs_temp = rhs->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        
+        if (lhs->has_index()) {
+            // Array assignment: a[i] = value
+            string index_temp = lhs->generate_index_code(outcode, symbol_to_temp, temp_count, label_count);
+            outcode << lhs->get_name() << "[" << index_temp << "] = " << rhs_temp << endl;
+        } else {
+            // Simple assignment: a = value
+            outcode << lhs->get_name() << " = " << rhs_temp << endl;
+            // Update the cached temp for this variable
+            symbol_to_temp[lhs->get_name()] = rhs_temp;
+        }
+        
+        return rhs_temp;
     }
 };
 
@@ -162,10 +202,13 @@ public:
     ExprStmtNode(ExprNode* e) : expr(e) {}
     ~ExprStmtNode() { if(expr) delete expr; }
     
+    ExprNode* get_expr() const { return expr; }
+    
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for expression statements
+        if (expr) {
+            expr->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        }
         return "";
     }
 };
@@ -189,8 +232,9 @@ public:
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for all statements in the block
+        for (auto stmt : statements) {
+            stmt->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        }
         return "";
     }
 };
@@ -215,8 +259,25 @@ public:
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for if-else statements
+        string cond_temp = condition->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        
+        string then_label = "L" + to_string(label_count++);
+        string else_label = "L" + to_string(label_count++);
+        string end_label = "L" + to_string(label_count++);
+        
+        outcode << "if " << cond_temp << " goto " << then_label << endl;
+        outcode << "goto " << else_label << endl;
+        
+        outcode << then_label << ":" << endl;
+        then_block->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        outcode << "goto " << end_label << endl;
+        
+        outcode << else_label << ":" << endl;
+        if (else_block) {
+            else_block->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        }
+        
+        outcode << end_label << ":" << endl;
         return "";
     }
 };
@@ -239,8 +300,20 @@ public:
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for while loops
+        string start_label = "L" + to_string(label_count++);
+        string body_label = "L" + to_string(label_count++);
+        string end_label = "L" + to_string(label_count++);
+        
+        outcode << start_label << ":" << endl;
+        string cond_temp = condition->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        outcode << "if " << cond_temp << " goto " << body_label << endl;
+        outcode << "goto " << end_label << endl;
+        
+        outcode << body_label << ":" << endl;
+        body->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        outcode << "goto " << start_label << endl;
+        
+        outcode << end_label << ":" << endl;
         return "";
     }
 };
@@ -255,20 +328,61 @@ private:
     StmtNode* body;
 
 public:
-    ForNode(ExprNode* init_expr, ExprNode* cond_expr, ExprNode* update_expr, StmtNode* body_stmt)
-        : init(init_expr), condition(cond_expr), update(update_expr), body(body_stmt) {}
+    ForNode(StmtNode* init_stmt, StmtNode* cond_stmt, ExprNode* update_expr, StmtNode* body_stmt)
+        : init(nullptr), condition(nullptr), update(update_expr), body(body_stmt) {
+        // Extract expressions from statement nodes
+        if (init_stmt) {
+            ExprStmtNode* expr_stmt = dynamic_cast<ExprStmtNode*>(init_stmt);
+            if (expr_stmt) {
+                init = expr_stmt->get_expr();
+                // Don't delete expr_stmt, it will be deleted by parser
+            }
+        }
+        if (cond_stmt) {
+            ExprStmtNode* expr_stmt = dynamic_cast<ExprStmtNode*>(cond_stmt);
+            if (expr_stmt) {
+                condition = expr_stmt->get_expr();
+            }
+        }
+    }
     
     ~ForNode() {
-        if (init) delete init;
-        if (condition) delete condition;
+        // Don't delete init and condition as they're owned by the ExprStmtNodes
         if (update) delete update;
         delete body;
     }
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for for loops
+        // Initialize
+        if (init) {
+            init->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        }
+        
+        string start_label = "L" + to_string(label_count++);
+        string body_label = "L" + to_string(label_count++);
+        string end_label = "L" + to_string(label_count++);
+        
+        outcode << start_label << ":" << endl;
+        
+        // Condition check
+        if (condition) {
+            string cond_temp = condition->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+            outcode << "if " << cond_temp << " goto " << body_label << endl;
+            outcode << "goto " << end_label << endl;
+        }
+        
+        outcode << body_label << ":" << endl;
+        body->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        
+        // Update
+        if (update) {
+            update->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        }
+        
+        outcode << "goto " << start_label << endl;
+        outcode << end_label << ":" << endl;
+        
         return "";
     }
 };
@@ -285,8 +399,12 @@ public:
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for return statements
+        if (expr) {
+            string return_temp = expr->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+            outcode << "return " << return_temp << endl;
+        } else {
+            outcode << "return" << endl;
+        }
         return "";
     }
 };
@@ -307,8 +425,15 @@ public:
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for variable declarations
+        for (const auto& var : vars) {
+            if (var.second > 0) {
+                // Array declaration
+                outcode << "// Declaration: " << type << " " << var.first << "[" << var.second << "]" << endl;
+            } else {
+                // Regular variable declaration
+                outcode << "// Declaration: " << type << " " << var.first << endl;
+            }
+        }
         return "";
     }
     
@@ -339,8 +464,23 @@ public:
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for function declarations
+        outcode << endl << "// Function: " << return_type << " " << name << "(";
+        
+        // Print parameters
+        for (size_t i = 0; i < params.size(); i++) {
+            outcode << params[i].first << " " << params[i].second;
+            if (i < params.size() - 1) outcode << ", ";
+        }
+        outcode << ")" << endl;
+        
+        // Clear symbol_to_temp map for new function scope
+        map<string, string> local_symbol_to_temp;
+        
+        // Generate code for function body with local temp map
+        if (body) {
+            body->generate_code(outcode, local_symbol_to_temp, temp_count, label_count);
+        }
+        
         return "";
     }
 };
@@ -405,9 +545,17 @@ public:
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for function calls
-        return "";
+        // Generate code for each argument and push parameters
+        for (auto arg : arguments) {
+            string arg_temp = arg->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+            outcode << "param " << arg_temp << endl;
+        }
+        
+        // Make the function call
+        string result_temp = "t" + to_string(temp_count++);
+        outcode << result_temp << " = call " << func_name << ", " << arguments.size() << endl;
+        
+        return result_temp;
     }
 };
 
@@ -430,8 +578,9 @@ public:
     
     string generate_code(ofstream& outcode, map<string, string>& symbol_to_temp,
                         int& temp_count, int& label_count) const override {
-        // TODO: Implement this method
-        // Should generate code for the entire program
+        for (auto unit : units) {
+            unit->generate_code(outcode, symbol_to_temp, temp_count, label_count);
+        }
         return "";
     }
 };

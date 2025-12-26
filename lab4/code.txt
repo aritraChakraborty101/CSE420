@@ -8,27 +8,29 @@
 
 // Three Address Code
 
-// Function: int main()
-// Declaration: int x
-// Declaration: int y
-// Declaration: int z
-t0 = 5
-x = t0
-t1 = 10
-y = t1
+// Function: int func(int a, float b)
+t0 = a
+t1 = b
 t2 = t0 + t1
-z = t2
-t3 = 10
-t4 = t2 > t3
-if t4 goto L0
-goto L1
-L0:
-t5 = t2 - t1
-x = t5
-goto L2
-L1:
-L2:
 return t2
+
+// Function: void main()
+// Declaration: int a
+// Declaration: int b
+// Declaration: int c
+// Declaration: int i
+// Declaration: int e
+// Declaration: int f[10]
+// Declaration: int g[11]
+t3 = 1
+a = t3
+t4 = 2
+b = t4
+param t3
+param t4
+t5 = call func, 2
+c = t5
+// Declaration: float d
 
 
 //========== END OF CODE ==========
